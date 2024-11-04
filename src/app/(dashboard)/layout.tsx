@@ -1,12 +1,10 @@
 import { UserNav } from "@/components/Navbar/UserNav";
-import { MainNav } from "../../components/Navbar/MainNav";
 import { Search } from "@/components/Navbar/Search";
-
-// import { UserNav } from "@/app/(app)/examples/dashboard/components/user-nav";
+import { MainNav } from "@/components/Navbar/MainNav";
 
 export default function DashboardLayout({ children }: React.PropsWithChildren) {
   return (
-    <div className="hidden flex-col md:flex">
+    <div className="flex-col flex">
       <div className="border-b">
         <div className="flex h-16 items-center px-4">
           <MainNav className="mx-6" />

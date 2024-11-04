@@ -1,7 +1,12 @@
 import * as React from "react";
 import Link from "next/link";
+import { Metadata } from "next";
 
 import AuthForm from "@/components/AuthForm";
+
+export const metadata: Metadata = {
+  title: "Login",
+};
 
 function page() {
   return (
