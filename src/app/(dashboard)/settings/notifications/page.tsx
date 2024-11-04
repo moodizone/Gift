@@ -1,5 +1,10 @@
-import { Separator } from "@/components/ui/separator"
-import { NotificationsForm } from "./notifications-form"
+import { Separator } from "@/components/ui/separator";
+import { NotificationsForm } from "./notifications-form";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Notification",
+};
 
 export default function SettingsNotificationsPage() {
   return (
@@ -13,5 +18,5 @@ export default function SettingsNotificationsPage() {
       <Separator />
       <NotificationsForm />
     </div>
-  )
+  );
 }

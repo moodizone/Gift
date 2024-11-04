@@ -1,5 +1,10 @@
-import { Separator } from "@/components/ui/separator"
-import { DisplayForm } from "./display-form"
+import { Separator } from "@/components/ui/separator";
+import { DisplayForm } from "./display-form";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Display",
+};
 
 export default function SettingsDisplayPage() {
   return (
@@ -13,5 +18,5 @@ export default function SettingsDisplayPage() {
       <Separator />
       <DisplayForm />
     </div>
-  )
+  );
 }
