@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useRouter } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import { Icons } from "@/components/SVGR";
@@ -12,6 +13,7 @@ export default function AuthForm({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
+  const router = useRouter();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   async function onSubmit(event: React.SyntheticEvent) {
@@ -20,6 +22,7 @@ export default function AuthForm({
 
     setTimeout(() => {
       setIsLoading(false);
+      router.push("/overview");
     }, 3000);
   }
 
