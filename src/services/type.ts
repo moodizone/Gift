@@ -26,7 +26,7 @@ export interface Order {
   id: string;
   userId: ShopperType["id"];
   projectId: ProjectType["id"];
-  productIds: ProductType["id"];
+  productIds: Array<ProductType["id"]>;
 }
 export interface AccountDetailsType {
   id: string;
