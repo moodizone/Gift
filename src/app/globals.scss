@@ -21,15 +21,15 @@ body {
 }
 
 html {
-  @supports (min-height: 100dvh) {
-    height: 100dvh;
-    width: 100dvw;
-  }
-
   // fallback
   height: 100vh;
   width: 100vw;
   overflow: hidden;
+
+  @supports (min-height: 100dvh) {
+    height: 100dvh;
+    width: 100dvw;
+  }
 
   body {
     height: 100%;
