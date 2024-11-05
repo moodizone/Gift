@@ -19,15 +19,15 @@ export const metadata: Metadata = {
 export default function DashboardPage() {
   return (
     <div className="flex-col flex">
-      <div className="flex-1 space-y-4 p-8 pt-6">
-        <div className="flex items-center justify-between space-y-2">
+      <div className="flex-1 space-y-4 p-4 md:p-8">
+        <div className="flex items-center justify-between flex-wrap space-y-2">
           <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center flex-wrap gap-2">
             <CalendarDateRangePicker />
             <Button>Download</Button>
           </div>
         </div>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
@@ -128,8 +128,8 @@ export default function DashboardPage() {
             </CardContent>
           </Card>
         </div>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-          <Card className="col-span-4">
+        <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-7">
+          <Card className="col-span-1 lg:col-span-4">
             <CardHeader>
               <CardTitle>Overview</CardTitle>
             </CardHeader>
@@ -137,7 +137,7 @@ export default function DashboardPage() {
               <Overview />
             </CardContent>
           </Card>
-          <Card className="col-span-3">
+          <Card className="col-span-1 lg:col-span-3">
             <CardHeader>
               <CardTitle>Recent Sales</CardTitle>
               <CardDescription>You made 265 sales this month.</CardDescription>
