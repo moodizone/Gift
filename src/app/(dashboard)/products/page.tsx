@@ -33,7 +33,7 @@ export default function MusicPage() {
               <Separator className="my-4" />
               <div className="relative max-w-[calc(100vw_-_32px)]">
                 <ScrollArea>
-                  <div className="flex space-x-4 pb-4">
+                  <div className="flex gap-x-4 pb-4">
                     {listenNowAlbums.map((album) => (
                       <AlbumArtwork
                         key={album.name}
@@ -59,7 +59,7 @@ export default function MusicPage() {
               <Separator className="my-4" />
               <div className="relative max-w-[calc(100vw_-_32px)]">
                 <ScrollArea>
-                  <div className="flex space-x-4 pb-4">
+                  <div className="flex gap-x-4 pb-4">
                     {madeForYouAlbums.map((album) => (
                       <AlbumArtwork
                         key={album.name}

@@ -97,7 +97,7 @@ export function DisplayForm() {
                     return (
                       <FormItem
                         key={item.id}
-                        className="flex flex-row items-start space-x-3 space-y-0"
+                        className="flex flex-row items-start gap-x-3 space-y-0"
                       >
                         <FormControl>
                           <Checkbox
