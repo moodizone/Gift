@@ -46,7 +46,7 @@ export default function AuthForm({
           </div>
           <Button disabled={isLoading}>
             {isLoading && (
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              <Icons.spinner className="me-2 h-4 w-4 animate-spin" />
             )}
             Sign In with Email
           </Button>
@@ -64,9 +64,9 @@ export default function AuthForm({
       </div>
       <Button variant="outline" type="button" disabled={isLoading}>
         {isLoading ? (
-          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+          <Icons.spinner className="me-2 h-4 w-4 animate-spin" />
         ) : (
-          <Icons.gitHub className="mr-2 h-4 w-4" />
+          <Icons.gitHub className="me-2 h-4 w-4" />
         )}{" "}
         GitHub
       </Button>

@@ -1,3 +1,4 @@
+import { DirectionProvider } from "@/hoc/DirectionProvider";
 import "./globals.scss";
 
 export default function RootLayout({
@@ -6,8 +7,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body>{children}</body>
+    <html lang="en" dir="rtl" className="dark">
+      <body>
+        <DirectionProvider>{children}</DirectionProvider>
+      </body>
     </html>
   );
 }
