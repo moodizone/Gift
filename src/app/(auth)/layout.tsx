@@ -10,11 +10,13 @@ export const metadata: Metadata = {
 
 export default function AuthLayout({ children }: React.PropsWithChildren) {
   return (
-    <div className="container p-3 md:p-0 mx-auto relative h-full flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2">
-      <UpperLink />
-      <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
-        <div className="absolute inset-0 bg-zinc-900" />
-        <div className="relative z-20 flex items-center text-lg font-medium">
+    <div className="grid h-full grid-cols-1 md:grid-cols-2">
+      <div className="flex items-center justify-center relative p-3 md:p-0">
+        <UpperLink />
+        {children}
+      </div>
+      <div className="hidden md:flex bg-zinc-900 p-8 flex-col">
+        <div className="flex text-lg">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -29,7 +31,7 @@ export default function AuthLayout({ children }: React.PropsWithChildren) {
           </svg>
           Acme Inc
         </div>
-        <div className="relative z-20 mt-auto">
+        <div className="mt-auto">
           <blockquote className="space-y-2">
             <p className="text-lg">
               &ldquo;This library has saved me countless hours of work and
@@ -40,7 +42,6 @@ export default function AuthLayout({ children }: React.PropsWithChildren) {
           </blockquote>
         </div>
       </div>
-      {children}
     </div>
   );
 }
