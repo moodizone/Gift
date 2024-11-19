@@ -1,3 +1,4 @@
+import { DirectionProvider } from "@/hoc/DirectionProvider";
 import "./globals.scss";
 
 export default function RootLayout({
@@ -7,7 +8,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" dir="rtl" className="dark">
-      <body>{children}</body>
+      <body>
+        <DirectionProvider>{children}</DirectionProvider>
+      </body>
     </html>
   );
 }

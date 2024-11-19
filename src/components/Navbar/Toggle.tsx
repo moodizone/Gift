@@ -1,22 +1,10 @@
 "use client";
+import { useDirection } from "@/hoc/DirectionProvider";
 import * as React from "react";
 
 function Toggle() {
-  return (
-    <button
-      onClick={() => {
-        const html = document.querySelector("html");
-
-        if (html) {
-          const dir = html.getAttribute("dir");
-
-          html.setAttribute("dir", dir === "rtl" ? "ltr" : "rtl");
-        }
-      }}
-    >
-      T
-    </button>
-  );
+  const { toggleDirection } = useDirection();
+  return <button onClick={toggleDirection}>T</button>;
 }
 
 export default Toggle;
