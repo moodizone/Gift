@@ -93,10 +93,20 @@ html {
   width: 100vw;
   overflow: hidden;
   font-family: "AnjomanMax", Arial, Helvetica, sans-serif;
+
   // english digit ---> normal
   // persian digit ---> ss05
   // monospace ---> ss06
-  font-feature-settings: "ss05";
+  &:not([dir="ltr"]) {
+    font-feature-settings: "ss05";
+  }
+
+  &[dir="rtl"] {
+    input[type="text"] {
+      direction: ltr;
+      text-align: right;
+    }
+  }
 
   @supports (font-variation-settings: normal) {
     font-family: "AnjomanMaxVF", Arial, Helvetica, sans-serif;
@@ -112,4 +122,8 @@ html {
     height: 100%;
     overflow: auto;
   }
+}
+
+.digit {
+  font-feature-settings: normal !important;
 }
