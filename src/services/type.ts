@@ -1,36 +1,55 @@
-export interface CategoryType {
-  id: string;
-  title: string;
+export enum gender {
+  male = "male",
+  female = "female",
+  others = "others"
 }
-export interface ShopperType {
-  id: string;
-  tel: string;
+
+export enum userRole {
+  user = "user",
+  admin = "admin"
+}
+
+export enum accountStatus {
+  active = "active",
+  deactive = "deactive",
+  suspended = "suspended"
+}
+
+export interface UserCreateBody {
+  email: string;
+  password: string;
+  age?: number;
+  gender?: gender;
   name?: string;
+  role?: userRole;
+  tel?: string;
 }
-export interface ProjectType {
-  id: string;
-  title: string;
-  burnLimit: number;
-  shoppers: Array<ShopperType["id"]>;
-  creationDate: string;
-  expire?: string;
+
+export interface UserCreateResponse {
+  email: string;
+  age: number | null;
+  gender: gender | null;
+  name: string | null;
+  profilePicture: string | null;
+  tel: string | null;
 }
-export interface ProductType {
-  id: string;
-  title: string;
-  description?: string;
-  image?: string;
-  price?: number;
+
+export interface AuthLoginBody {
+  email: string;
+  password: string;
 }
-export interface Order {
-  id: string;
-  userId: ShopperType["id"];
-  projectId: ProjectType["id"];
-  productIds: Array<ProductType["id"]>;
+
+export interface AuthLoginResponse {
+  email: string;
+  id: number;
+  tel: string | null;
+  name: string | null;
+  gender: gender | null;
+  age: number | null;
+  profilePicture: string | null;
+  token: string;
 }
-export interface AccountDetailsType {
-  id: string;
-  name?: string;
-  tel: string;
-  avatar?: string;
+
+export interface AuthEmailAvailabilityBody {
+  email: string;
 }
