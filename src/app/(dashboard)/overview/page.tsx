@@ -133,7 +133,7 @@ export default function DashboardPage() {
             <CardHeader>
               <CardTitle>Overview</CardTitle>
             </CardHeader>
-            <CardContent className="ps-2">
+            <CardContent className="ps-2" dir="ltr">
               <Overview />
             </CardContent>
           </Card>
