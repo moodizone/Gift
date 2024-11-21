@@ -1,6 +1,7 @@
 import { DirectionProvider } from "@/hoc/DirectionProvider";
-import "./globals.scss";
 import ErrorBoundaryProvider from "@/hoc/ErrorBoundary";
+import { Toaster } from "@/components/ui/toaster";
+import "./globals.scss";
 
 export default function RootLayout({
   children,
@@ -11,7 +12,10 @@ export default function RootLayout({
     <html lang="en" dir="rtl" className="dark">
       <body>
         <DirectionProvider>
-          <ErrorBoundaryProvider>{children}</ErrorBoundaryProvider>{" "}
+          <ErrorBoundaryProvider>
+            <Toaster />
+            {children}
+          </ErrorBoundaryProvider>{" "}
         </DirectionProvider>
       </body>
     </html>
