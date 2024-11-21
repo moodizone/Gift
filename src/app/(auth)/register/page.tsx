@@ -1,12 +1,14 @@
 import * as React from "react";
 import Link from "next/link";
-import { Metadata } from "next";
 
-import LoginForm from "../register/Form";
+import RegisterForm from "../register/Form";
+import { generateMeta } from "@/lib/metadata";
 
-export const metadata: Metadata = {
-  title: "Login",
-};
+export const metadata = generateMeta({
+  title: "Register",
+  description:
+    "Sign up to join our platform and unlock exclusive features tailored to your needs.",
+});
 
 function page() {
   return (
@@ -20,7 +22,7 @@ function page() {
             Enter your email below to create your account
           </p>
         </div>
-        <LoginForm />
+        <RegisterForm />
         <p className="px-8 text-center text-sm text-muted-foreground">
           By clicking continue, you agree to our{" "}
           <Link

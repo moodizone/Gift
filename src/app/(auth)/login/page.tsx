@@ -1,12 +1,14 @@
 import * as React from "react";
 import Link from "next/link";
-import { Metadata } from "next";
 
 import AuthForm from "@/components/AuthForm";
+import { generateMeta } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata = generateMeta({
   title: "Login",
-};
+  description:
+    "Securely log in to your account to access your personalized dashboard and settings.",
+});
 
 function page() {
   return (
