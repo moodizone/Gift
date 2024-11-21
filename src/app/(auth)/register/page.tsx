@@ -2,10 +2,10 @@ import * as React from "react";
 import Link from "next/link";
 import { Metadata } from "next";
 
-import AuthForm from "@/components/AuthForm";
+import LoginForm from "../register/Form";
 
 export const metadata: Metadata = {
-  title: "Register",
+  title: "Login",
 };
 
 function page() {
@@ -20,7 +20,7 @@ function page() {
             Enter your email below to create your account
           </p>
         </div>
-        <AuthForm />
+        <LoginForm />
         <p className="px-8 text-center text-sm text-muted-foreground">
           By clicking continue, you agree to our{" "}
           <Link
