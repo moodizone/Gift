@@ -26,7 +26,7 @@ import { APIError } from "@/lib/fetch";
 import { useToast } from "@/hooks/use-toast";
 import { toastError } from "@/lib/toasHandlers";
 
-export default function RegisterForm() {
+export default function LoginForm() {
   const router = useRouter();
   const emailId = React.useId();
   const passwordId = React.useId();
@@ -147,28 +147,10 @@ export default function RegisterForm() {
             {isLoading && (
               <Icons.spinner className="me-2 h-4 w-4 animate-spin" />
             )}
-            {"Get started"}
+            {"Enter"}
           </Button>
         </form>
       </Form>
-      <div className="relative">
-        <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t" />
-        </div>
-        <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-background px-2 text-muted-foreground">
-            Or continue with
-          </span>
-        </div>
-      </div>
-      <Button variant="outline" type="button" disabled={isLoading}>
-        {isLoading ? (
-          <Icons.spinner className="me-2 h-4 w-4 animate-spin" />
-        ) : (
-          <Icons.gitHub className="me-2 h-4 w-4" />
-        )}{" "}
-        GitHub
-      </Button>
     </div>
   );
 }
