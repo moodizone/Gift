@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDebounce } from "react-use";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 import { cn } from "@/lib/utils";
 import { Icons } from "@/components/SVGR";
@@ -68,11 +69,12 @@ export default function LoginForm() {
     try {
       const response = await register({ email, password });
       if (response) {
+        Cookies.set("token", response.token, { expires: 1 });
         toast({
           title: "Welcome",
           description: "Your journey starts now. ✨",
         });
-        router.push("/overview");
+        router.push("/");
       }
     } catch (error) {
       if (error instanceof APIError) {
@@ -89,7 +91,7 @@ export default function LoginForm() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="grid gap-y-4"
+          className="grid gap-y-2"
           noValidate
         >
           <FormField
