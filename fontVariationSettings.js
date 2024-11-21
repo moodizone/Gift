@@ -6,6 +6,7 @@ const fontVariationSettings = plugin(function ({ addUtilities }) {
     thin: 100,
     light: 300,
     normal: 400,
+    semibold: 600,
     bold: 700,
     black: 900,
   };
