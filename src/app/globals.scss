@@ -108,6 +108,10 @@ html {
     }
   }
 
+  code{
+    direction: ltr;
+  }
+
   @supports (font-variation-settings: normal) {
     font-family: "AnjomanMaxVF", Arial, Helvetica, sans-serif;
     font-variation-settings: "wght" 400;
