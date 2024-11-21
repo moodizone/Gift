@@ -4,7 +4,6 @@ import * as React from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useDebounce } from "react-use";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 
@@ -12,7 +11,7 @@ import { cn } from "@/lib/utils";
 import { Icons } from "@/components/SVGR";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { emailSchema, loginSchema } from "@/validation";
+import { loginSchema } from "@/validation";
 import {
   Form,
   FormControl,
@@ -21,10 +20,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { emailAvailability, register } from "@/services/auth";
+import { login } from "@/services/auth";
 import { APIError } from "@/lib/fetch";
 import { useToast } from "@/hooks/use-toast";
-import { toastError } from "@/lib/toasHandlers";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -39,47 +37,26 @@ export default function LoginForm() {
     },
   });
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const email = form.watch("email");
-  useDebounce(checkEmailAvailability, 1500, [email]);
 
-  async function checkEmailAvailability() {
-    const { success } = emailSchema.safeParse(email);
-
-    // send the request if user enters valid email
-    if (success) {
-      try {
-        const response = await emailAvailability({ email });
-
-        if (response) {
-          return form.clearErrors("email");
-        }
-      } catch (error) {
-        if (error instanceof APIError && error.response.status === 409) {
-          return form.setError("email", {
-            type: "manual",
-            message: "This email is not available",
-          });
-        }
-      }
-    }
-  }
   async function onSubmit({ email, password }: z.infer<typeof loginSchema>) {
     setIsLoading(true);
 
     try {
-      const response = await register({ email, password });
+      const response = await login({ email, password });
       if (response) {
         Cookies.set("token", response.token, { expires: 1 });
         toast({
-          title: "Welcome",
-          description: "Your journey starts now. ✨",
+          title: "Welcome Back!👋",
+          description: "You’re logged in and ready to go.",
         });
         router.push("/overview");
       }
     } catch (error) {
       if (error instanceof APIError) {
-        // display banner errors
-        toastError(toast, error);
+        return form.setError("email", {
+          type: "manual",
+          message: "Invalid email or password. Please try again.",
+        });
       }
     } finally {
       setIsLoading(false);
