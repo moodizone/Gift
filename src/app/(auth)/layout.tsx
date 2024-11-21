@@ -16,7 +16,7 @@ export default function AuthLayout({ children }: React.PropsWithChildren) {
         {children}
       </div>
       <div className="hidden md:flex bg-zinc-900 p-8 flex-col">
-        <div className="flex text-lg">
+        <div className="flex text-lg text-white">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -33,7 +33,7 @@ export default function AuthLayout({ children }: React.PropsWithChildren) {
         </div>
         <div className="mt-auto">
           <blockquote className="space-y-2">
-            <p className="text-lg">
+            <p className="text-lg text-white">
               &ldquo;This library has saved me countless hours of work and
               helped me deliver stunning designs to my clients faster than ever
               before.&rdquo;
