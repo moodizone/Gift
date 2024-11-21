@@ -1,18 +1,22 @@
 export enum gender {
   male = "male",
   female = "female",
-  others = "others"
+  others = "others",
 }
 
 export enum userRole {
   user = "user",
-  admin = "admin"
+  admin = "admin",
 }
 
 export enum accountStatus {
   active = "active",
   deactive = "deactive",
-  suspended = "suspended"
+  suspended = "suspended",
+}
+
+export interface ErrorType {
+  message: string | Array<Record<string, string>>;
 }
 
 export interface UserCreateBody {
