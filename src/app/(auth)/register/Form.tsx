@@ -74,7 +74,7 @@ export default function LoginForm() {
           title: "Welcome",
           description: "Your journey starts now. ✨",
         });
-        router.push("/");
+        router.push("/overview");
       }
     } catch (error) {
       if (error instanceof APIError) {
