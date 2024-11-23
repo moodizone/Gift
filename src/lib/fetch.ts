@@ -18,7 +18,7 @@ export async function clientFetch<T = unknown>(
     headers: newHeaders,
   };
   const response = await fetch(
-    process.env.NEXT_PUBLIC_DOMAIN + url,
+    process.env.NEXT_PUBLIC_DOMAIN + "/api" + url,
     newOptions
   );
 
