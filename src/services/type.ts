@@ -15,6 +15,11 @@ export enum accountStatus {
   suspended = "suspended",
 }
 
+export enum language {
+  en = "en",
+  fa = "fa",
+}
+
 export interface ErrorType {
   message: string | Array<Record<string, string>>;
 }
