@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useDebounce } from "react-use";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import { useTranslation } from "react-i18next";
 
 import { cn } from "@/lib/utils";
 import { Icons } from "@/components/SVGR";
@@ -27,6 +28,7 @@ import { useToast } from "@/hooks/use-toast";
 import { toastError } from "@/lib/toasHandlers";
 
 export default function RegisterForm() {
+  const { t } = useTranslation();
   const router = useRouter();
   const emailId = React.useId();
   const passwordId = React.useId();
@@ -57,7 +59,7 @@ export default function RegisterForm() {
         if (error instanceof APIError && error.response.status === 409) {
           return form.setError("email", {
             type: "manual",
-            message: "This email is not available",
+            message: t("This email is not available."),
           });
         }
       }
@@ -71,8 +73,8 @@ export default function RegisterForm() {
       if (response) {
         Cookies.set("token", response.token, { expires: 1 });
         toast({
-          title: "Welcome",
-          description: "Your journey starts now. ✨",
+          title: t("Welcome"),
+          description: t("Your journey starts now."),
         });
         router.push("/overview");
       }
@@ -100,7 +102,7 @@ export default function RegisterForm() {
             render={({ field }) => {
               return (
                 <FormItem>
-                  <FormLabel htmlFor={emailId}>Email</FormLabel>
+                  <FormLabel htmlFor={emailId}>{t("Email")}</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -125,7 +127,7 @@ export default function RegisterForm() {
             render={({ field }) => {
               return (
                 <FormItem>
-                  <FormLabel htmlFor={passwordId}>Password</FormLabel>
+                  <FormLabel htmlFor={passwordId}>{t("Password")}</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -147,7 +149,7 @@ export default function RegisterForm() {
             {isLoading && (
               <Icons.spinner className="me-2 h-4 w-4 animate-spin" />
             )}
-            {"Get started"}
+            {t("Get started")}
           </Button>
         </form>
       </Form>

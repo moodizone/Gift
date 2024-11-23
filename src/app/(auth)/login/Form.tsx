@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import { useTranslation } from "react-i18next";
 
 import { cn } from "@/lib/utils";
 import { Icons } from "@/components/SVGR";
@@ -25,6 +26,7 @@ import { APIError } from "@/lib/fetch";
 import { useToast } from "@/hooks/use-toast";
 
 export default function LoginForm() {
+  const { t } = useTranslation();
   const router = useRouter();
   const emailId = React.useId();
   const passwordId = React.useId();
@@ -46,8 +48,8 @@ export default function LoginForm() {
       if (response) {
         Cookies.set("token", response.token, { expires: 1 });
         toast({
-          title: "Welcome Back!👋",
-          description: "You’re logged in and ready to go.",
+          title: t("welcome-back-toast"),
+          description: t("You’re logged in and ready to go."),
         });
         router.push("/overview");
       }
@@ -55,7 +57,7 @@ export default function LoginForm() {
       if (error instanceof APIError) {
         return form.setError("email", {
           type: "manual",
-          message: "Invalid email or password. Please try again.",
+          message: t("Invalid email or password. Please try again."),
         });
       }
     } finally {
@@ -77,7 +79,7 @@ export default function LoginForm() {
             render={({ field }) => {
               return (
                 <FormItem>
-                  <FormLabel htmlFor={emailId}>Email</FormLabel>
+                  <FormLabel htmlFor={emailId}>{t("Email")}</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -102,7 +104,7 @@ export default function LoginForm() {
             render={({ field }) => {
               return (
                 <FormItem>
-                  <FormLabel htmlFor={passwordId}>Password</FormLabel>
+                  <FormLabel htmlFor={passwordId}>{t("Password")}</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -124,7 +126,7 @@ export default function LoginForm() {
             {isLoading && (
               <Icons.spinner className="me-2 h-4 w-4 animate-spin" />
             )}
-            {"Enter"}
+            {t("Enter")}
           </Button>
         </form>
       </Form>

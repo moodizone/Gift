@@ -1,8 +1,9 @@
 import * as React from "react";
-import Link from "next/link";
 
 import RegisterForm from "../register/Form";
 import { generateMeta } from "@/lib/metadata";
+import { getI18nInstance } from "@/locale/server-config";
+import Terms from "./Terms";
 
 export const metadata = generateMeta({
   title: "Register",
@@ -10,36 +11,21 @@ export const metadata = generateMeta({
     "Sign up to join our platform and unlock exclusive features tailored to your needs.",
 });
 
-function page() {
+async function page() {
+  const i18n = await getI18nInstance();
   return (
     <div className="lg:p-8">
       <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
         <div className="flex flex-col space-y-2 text-center">
           <h1 className="text-2xl font-semibold tracking-tight">
-            Join Us Today!
+            {i18n.t("Join Us Today!")}
           </h1>
           <p className="text-sm text-muted-foreground">
-            Register now to enjoy exclusive benefits and features.
+            {i18n.t("Register now to enjoy exclusive benefits and features.")}
           </p>
         </div>
         <RegisterForm />
-        <p className="px-8 text-center text-sm text-muted-foreground">
-          By clicking continue, you agree to our{" "}
-          <Link
-            href="/terms"
-            className="underline underline-offset-4 hover:text-primary"
-          >
-            Terms of Service
-          </Link>{" "}
-          and{" "}
-          <Link
-            href="/privacy"
-            className="underline underline-offset-4 hover:text-primary"
-          >
-            Privacy Policy
-          </Link>
-          .
-        </p>
+        <Terms />
       </div>
     </div>
   );

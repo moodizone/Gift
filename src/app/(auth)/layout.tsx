@@ -1,14 +1,12 @@
-import { Metadata } from "next";
 import * as React from "react";
 
 import UpperLink from "./UpperLink";
+import { getI18nInstance } from "@/locale/server-config";
 
-export const metadata: Metadata = {
-  title: "Authentication",
-  description: "Authentication forms built using the components.",
-};
-
-export default function AuthLayout({ children }: React.PropsWithChildren) {
+export default async function AuthLayout({
+  children,
+}: React.PropsWithChildren) {
+  const i18n = await getI18nInstance();
   return (
     <div className="grid h-full grid-cols-1 md:grid-cols-2">
       <div className="flex items-center justify-center relative p-3 md:p-0">
@@ -34,9 +32,11 @@ export default function AuthLayout({ children }: React.PropsWithChildren) {
         <div className="mt-auto">
           <blockquote className="space-y-2">
             <p className="text-lg text-white">
-              &ldquo;This library has saved me countless hours of work and
-              helped me deliver stunning designs to my clients faster than ever
-              before.&rdquo;
+              &ldquo;
+              {i18n.t(
+                "This library has saved me countless hours of work and helped me deliver stunning designs to my clients faster than ever before."
+              )}
+              &rdquo;
             </p>
             <footer className="text-sm">Sofia Davis</footer>
           </blockquote>

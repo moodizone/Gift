@@ -1,3 +1,21 @@
 {
-  "welcome-back": "Welcome Back!"
+  "welcome-back": "Welcome Back!",
+  "Welcome": "Welcome",
+  "welcome-back-toast": "Welcome Back!👋",
+  "Enter": "Enter",
+  "Email": "Email",
+  "Password": "Password",
+  "Login": "Login",
+  "Register": "Register",
+  "Sign in to explore personalized features and more.": "Sign in to explore personalized features and more.",
+  "You’re logged in and ready to go.": "You’re logged in and ready to go.",
+  "Invalid email or password. Please try again.": "Invalid email or password. Please try again.",
+  "This library has saved me countless hours of work and helped me deliver stunning designs to my clients faster than ever before.": "This library has saved me countless hours of work and helped me deliver stunning designs to my clients faster than ever before.",
+  "Join Us Today!": "Join Us Today!",
+  "Register now to enjoy exclusive benefits and features.": "Register now to enjoy exclusive benefits and features.",
+  "By clicking continue, you agree to our Terms of Service and Privacy Policy.": "By clicking continue, you agree to our <a>Terms of Service</a> and <b>Privacy Policy</b>.",
+  "This email is not available.": "This email is not available.",
+  "Your journey starts now.": "Your journey starts now. ✨",
+  "Or continue with Github": "Or continue with Github",
+  "Get started": "Get started"
 }
