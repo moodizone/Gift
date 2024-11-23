@@ -17,8 +17,10 @@ export async function clientFetch<T = unknown>(
     ...options,
     headers: newHeaders,
   };
-  const base = "http://localhost:3000/api";
-  const response = await fetch(base + url, newOptions);
+  const response = await fetch(
+    process.env.NEXT_PUBLIC_DOMAIN + url,
+    newOptions
+  );
 
   if (response.ok) {
     const result = await response.clone().json();
