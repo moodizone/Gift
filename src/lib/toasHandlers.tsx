@@ -28,9 +28,11 @@ export async function toastError(ins: typeof toast, error: APIError) {
   // rest of api errors
   const errors: ErrorType = await error.response.json();
   const description = (
-    <code dir="ltr" className="whitespace-pre-wrap">
-      {JSON.stringify(errors.message, null, 2)}
-    </code>
+    <pre className="mt-2 rounded-md p-4">
+      <code dir="ltr" className="text-white">
+        {JSON.stringify(errors.message, null, 2)}
+      </code>
+    </pre>
   );
 
   ins({
