@@ -28,9 +28,9 @@ export async function toastError(ins: typeof toast, error: APIError) {
   // rest of api errors
   const errors: ErrorType = await error.response.json();
   const description = (
-    <pre className="mt-2 rounded-md p-4">
-      <code dir="ltr" className="text-white">
-        {JSON.stringify(errors.message, null, 2)}
+    <pre className="mt-2 rounded-md p-1 bg-red-950">
+      <code dir="ltr" className="text-white whitespace-pre-wrap">
+        {JSON.stringify(errors.message, null, 1)}
       </code>
     </pre>
   );
