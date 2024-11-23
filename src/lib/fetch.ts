@@ -1,5 +1,3 @@
-import Cookie from "js-cookie";
-
 export class APIError extends Error {
   response: Response;
 
@@ -19,12 +17,6 @@ export async function clientFetch<T = unknown>(
     ...options,
     headers: newHeaders,
   };
-  // set language header
-  const language = Cookie.get("language");
-
-  if (language) {
-    newHeaders.set("x-user-language", "language");
-  }
 
   const response = await fetch(
     process.env.NEXT_PUBLIC_DOMAIN + "/api" + url,

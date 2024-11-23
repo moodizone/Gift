@@ -1,25 +1,29 @@
 import { toast } from "@/hooks/use-toast";
 import Link from "next/link";
+import { Trans } from "react-i18next";
 
 import { APIError } from "./fetch";
 import { ErrorType } from "@/services/type";
 
 export async function toastError(ins: typeof toast, error: APIError) {
+  const { href } = window.location;
+  const encoded = encodeURIComponent(href);
   // unauthorized error
   if (error.response.status === 401) {
     ins({
       title: "Unauthorized Access 🔒",
       description: (
-        <p>
-          Your session has expired. Please{" "}
-          <Link
-            className="underline underline-offset-4 hover:text-primary"
-            href="/login"
-          >
-            log in
-          </Link>{" "}
-          to continue.
-        </p>
+        <Trans
+          components={{
+            a: (
+              <Link
+                className="underline underline-offset-4 hover:text-primary"
+                href={`/login?next=${encoded}`}
+              />
+            ),
+          }}
+          i18nKey={"Your session has expired"}
+        />
       ),
     });
     return;
