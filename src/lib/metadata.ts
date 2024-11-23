@@ -21,7 +21,6 @@ export function generateMeta({ title, description }: ParamsTypes): Metadata {
     alternates: {
       canonical: process.env.NEXT_PUBLIC_DOMAIN,
     },
-    viewport: "width=device-width, initial-scale=1.0",
     robots: "noindex, nofollow",
   };
 }
