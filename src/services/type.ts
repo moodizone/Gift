@@ -43,6 +43,7 @@ export interface AuthLoginResponse {
   age: number | null;
   profilePicture: string | null;
   token: string;
+  language: language | null;
 }
 
 export interface AuthEmailAvailabilityBody {
