@@ -1,14 +1,40 @@
 import { z } from "zod";
 
+import i18next from "@/locale/client-config";
+
 import { gender, userRole } from "@/services/type";
 
-const customErrorMap: z.ZodErrorMap = (issue, ctx) => {
-  // prevent printing list of enums as within error message
-  if (issue.code === z.ZodIssueCode.invalid_enum_value) {
-    return { message: "Invalid value. Select a valid option" };
+const customErrorMap: z.ZodErrorMap = (issue) => {
+  switch (issue.code) {
+    case z.ZodIssueCode.too_small:
+      return {
+        message: i18next.t("validation.too_small", {
+          minimum: issue.minimum,
+        }),
+      };
+    case z.ZodIssueCode.too_big:
+      return {
+        message: i18next.t("validation.too_big", {
+          maximum: issue.maximum,
+        }),
+      };
+    case z.ZodIssueCode.custom:
+      return {
+        message: i18next.t("validation.custom"),
+      };
+    case z.ZodIssueCode.invalid_enum_value:
+      return {
+        message: i18next.t("validation.invalid_enum_value"),
+      };
+    case z.ZodIssueCode.invalid_date:
+      return {
+        message: i18next.t("validation.invalid_date"),
+      };
+    default:
+      return {
+        message: i18next.t("validation.invalid_value"),
+      };
   }
-
-  return { message: ctx.defaultError };
 };
 
 z.setErrorMap(customErrorMap);

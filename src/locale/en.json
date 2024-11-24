@@ -18,5 +18,13 @@
   "Your journey starts now.": "Your journey starts now. ✨",
   "Or continue with Github": "Or continue with Github",
   "Get started": "Get started",
-  "Your session has expired": "Your session has expired. Please <a>log in</a> to continue"
+  "Your session has expired": "Your session has expired. Please <a>log in</a> to continue",
+  "validation": {
+    "invalid_value": "Invalid value entered",
+    "too_small": "Minimum length is {{minimum}}",
+    "too_big": "Maximum length is {{maximum}}",
+    "custom": "This field has an invalid value",
+    "invalid_enum_value": "This value is not allowed",
+    "invalid_date": "Invalid date entered"
+  }
 }

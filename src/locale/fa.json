@@ -18,5 +18,13 @@
   "This email is not available.": "این ایمیل در دسترس نیست.",
   "Your journey starts now.": "سفر شما از همین حالا آغاز می‌شود. ✨",
   "Or continue with Github": "یا با گیت‌هاب وارد دهید",
-  "Your session has expired": "به نظر میاد مدت ورود شما تموم شده. لطفاً <a>دوباره وارد شوید</a> و ادامه بدید"
+  "Your session has expired": "به نظر میاد مدت ورود شما تموم شده. لطفاً <a>دوباره وارد شوید</a> و ادامه بدید",
+  "validation": {
+    "invalid_value": "مقدار وارد شده نامعتبر است",
+    "too_small": "حداقل طول باید {{minimum}} باشد",
+    "too_big": "حداکثر طول باید {{maximum}} باشد",
+    "custom": "این فیلد دارای مقدار نامعتبر است",
+    "invalid_enum_value": "این مقدار مجاز نیست",
+    "invalid_date": "تاریخ وارد شده نامعتبر است"
+  }
 }
