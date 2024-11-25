@@ -1,4 +1,4 @@
-import { fallbackLng } from "@/configs";
+import { fallbackLanguage } from "@/lib/settings";
 import en from "./en.json";
 import fa from "./fa.json";
 
@@ -12,7 +12,7 @@ export const options = {
     },
   },
   lng: "en",
-  fallbackLng,
+  fallbackLng: fallbackLanguage,
   keySeparator: ".",
   interpolation: {
     escapeValue: false,

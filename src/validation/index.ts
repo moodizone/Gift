@@ -2,7 +2,8 @@ import { z } from "zod";
 
 import i18next from "@/locale/client-config";
 
-import { gender, userRole } from "@/services/type";
+import { gender, language, userRole } from "@/services/type";
+import { ThemeEnum } from "@/lib/settings";
 
 const customErrorMap: z.ZodErrorMap = (issue) => {
   switch (issue.code) {
@@ -46,7 +47,13 @@ const passwordSchema = z.string().min(6).max(256);
 const roleSchema = z.nativeEnum(userRole).optional();
 const genderSchema = z.nativeEnum(gender).optional();
 const ageSchema = z.number().int().positive().optional();
+const languageSchema = z.nativeEnum(language).optional();
+const themeSchema = z.nativeEnum(ThemeEnum).optional();
 
+export const appearanceSchema = z.object({
+  theme: themeSchema,
+  language: languageSchema,
+});
 export const createUserSchema = z.object({
   tel: telSchema,
   name: nameSchema,
