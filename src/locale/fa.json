@@ -26,5 +26,15 @@
     "custom": "این فیلد دارای مقدار نامعتبر است",
     "invalid_enum_value": "این مقدار مجاز نیست",
     "invalid_date": "تاریخ وارد شده نامعتبر است"
-  }
+  },
+  "Language": "زبان",
+  "English": "انگلیسی",
+  "Persian": "فارسی",
+  "Theme": "تم",
+  "Light": "روشن",
+  "Dark": "تیره",
+  "Update preferences": "بروزرسانی تنظیمات",
+  "Choose the language you’re most comfortable with. Your choice will enhance your experience!": "زبان مورد نظر خود را انتخاب کنید. انتخاب شما تجربه شما را بهبود می‌بخشد!",
+  "Switch between light and dark modes to match your vibe.": "بین تم‌های روشن و تیره انتخاب کن تا راحت‌تر با محیط کار کنی.",
+  "Select a valid language to display": "یک زبان معتبر برای نمایش انتخاب کنید"
 }

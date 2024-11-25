@@ -26,5 +26,15 @@
     "custom": "This field has an invalid value",
     "invalid_enum_value": "This value is not allowed",
     "invalid_date": "Invalid date entered"
-  }
+  },
+  "Language": "Language",
+  "English": "English",
+  "Persian": "Persian",
+  "Theme": "Theme",
+  "Light": "Light",
+  "Dark": "Dark",
+  "Update preferences": "Update preferences",
+  "Choose the language you’re most comfortable with. Your choice will enhance your experience!": "Choose the language you’re most comfortable with. Your choice will enhance your experience!",
+  "Switch between light and dark modes to match your vibe.": "Switch between light and dark modes to match your vibe.",
+  "Select a valid language to display": "Select a valid language to display"
 }
