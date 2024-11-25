@@ -1,13 +1,13 @@
 "use client";
 
+import * as React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import Cookies from "js-cookie";
 
-import { cn } from "@/lib/utils";
-import { toast } from "@/hooks/use-toast";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -18,39 +18,37 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { appearanceSchema } from "@/validation";
+import { useTranslation } from "react-i18next";
+import { language } from "@/services/type";
+import { getLanguage, getTheme, setLanguage, setTheme } from "@/lib/settings";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
-const appearanceFormSchema = z.object({
-  theme: z.enum(["light", "dark"], {
-    required_error: "Please select a theme.",
-  }),
-  font: z.enum(["inter", "manrope", "system"], {
-    invalid_type_error: "Select a font",
-    required_error: "Please select a font.",
-  }),
-});
-
-type AppearanceFormValues = z.infer<typeof appearanceFormSchema>;
-
-// This can come from your database or API.
-const defaultValues: Partial<AppearanceFormValues> = {
-  theme: "light",
-};
+type AppearanceFormValues = z.infer<typeof appearanceSchema>;
 
 export function AppearanceForm() {
+  const { t } = useTranslation();
+  const lng = getLanguage(Cookies.get("language"));
+  const theme = getTheme(Cookies.get("theme"));
   const form = useForm<AppearanceFormValues>({
-    resolver: zodResolver(appearanceFormSchema),
-    defaultValues,
+    resolver: zodResolver(appearanceSchema),
+    defaultValues: {
+      theme,
+      language: lng,
+    },
   });
 
-  function onSubmit(data: AppearanceFormValues) {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
+  function onSubmit({ language, theme }: z.infer<typeof appearanceSchema>) {
+    setTheme(theme);
+    setLanguage(language);
+    // have to reload because of caching
+    window.location.reload();
   }
 
   return (
@@ -58,28 +56,31 @@ export function AppearanceForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
-          name="font"
+          name="language"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Font</FormLabel>
-              <div className="relative w-max">
-                <FormControl>
-                  <select
-                    className={cn(
-                      buttonVariants({ variant: "outline" }),
-                      "w-[200px] appearance-none font-normal"
-                    )}
-                    {...field}
-                  >
-                    <option value="inter">Inter</option>
-                    <option value="manrope">Manrope</option>
-                    <option value="system">System</option>
-                  </select>
-                </FormControl>
-                <ChevronDownIcon className="absolute right-3 top-2.5 h-4 w-4 opacity-50" />
-              </div>
+              <FormLabel>{t("Language")}</FormLabel>
+              <FormControl>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a verified email to display" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value={language.en}>{t("English")}</SelectItem>
+                    <SelectItem value={language.fa}>{t("Persian")}</SelectItem>
+                  </SelectContent>
+                </Select>
+              </FormControl>
+              <ChevronDownIcon className="absolute right-3 top-2.5 h-4 w-4 opacity-50" />
               <FormDescription>
-                Set the font you want to use in the dashboard.
+                {t(
+                  "Choose the language you’re most comfortable with. Your choice will enhance your experience!"
+                )}
               </FormDescription>
               <FormMessage />
             </FormItem>
@@ -90,9 +91,9 @@ export function AppearanceForm() {
           name="theme"
           render={({ field }) => (
             <FormItem className="space-y-1">
-              <FormLabel>Theme</FormLabel>
+              <FormLabel>{t("Theme")}</FormLabel>
               <FormDescription>
-                Select the theme for the dashboard.
+                {t("Switch between light and dark modes to match your vibe.")}
               </FormDescription>
               <FormMessage />
               <RadioGroup
@@ -122,7 +123,7 @@ export function AppearanceForm() {
                       </div>
                     </div>
                     <span className="block w-full p-2 text-center font-normal">
-                      Light
+                      {t("Light")}
                     </span>
                   </FormLabel>
                 </FormItem>
@@ -148,7 +149,7 @@ export function AppearanceForm() {
                       </div>
                     </div>
                     <span className="block w-full p-2 text-center font-normal">
-                      Dark
+                      {t("Dark")}
                     </span>
                   </FormLabel>
                 </FormItem>
@@ -157,7 +158,9 @@ export function AppearanceForm() {
           )}
         />
 
-        <Button type="submit">Update preferences</Button>
+        <Button disabled={!form.formState.isDirty} type="submit">
+          {t("Update preferences")}
+        </Button>
       </form>
     </Form>
   );

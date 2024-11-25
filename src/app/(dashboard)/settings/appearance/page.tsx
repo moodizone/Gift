@@ -2,6 +2,8 @@ import { Separator } from "@/components/ui/separator";
 import { AppearanceForm } from "./appearance-form";
 import { Metadata } from "next";
 
+export const revalidate = 0;
+
 export const metadata: Metadata = {
   title: "Appearance",
 };
