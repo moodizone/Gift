@@ -1,4 +1,4 @@
-import { fallbackLng } from "@/locale/detectLng";
+import { fallbackLng } from "@/configs";
 import en from "./en.json";
 import fa from "./fa.json";
 

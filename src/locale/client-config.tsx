@@ -6,8 +6,8 @@ import { useAsync } from "react-use";
 import Cookies from "js-cookie";
 
 import { options } from "@/locale/options";
-import { fallbackLng } from "./detectLng";
 import { language } from "@/services/type";
+import { fallbackLng } from "@/configs";
 
 i18next.use(initReactI18next).init(options);
 

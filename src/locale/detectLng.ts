@@ -1,6 +1,6 @@
+import { fallbackLng } from "@/configs";
 import { language } from "@/services/type";
 
-export const fallbackLng = language.en;
 
 export function detectLng(lng: unknown): language {
   switch (lng) {

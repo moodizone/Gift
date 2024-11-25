@@ -3,8 +3,8 @@ import { initReactI18next } from "react-i18next/initReactI18next";
 import { cookies } from "next/headers";
 
 import { options } from "@/locale/options";
-import { fallbackLng } from "./detectLng";
 import { language } from "@/services/type";
+import { fallbackLng } from "@/configs";
 
 let i18nInstance: i18n | null = null;
 
