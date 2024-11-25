@@ -1,3 +1,3 @@
 export default function Home() {
-  <div>landing goes here</div>;
+  return <div className="p-5 m-5">landing goes here</div>;
 }
