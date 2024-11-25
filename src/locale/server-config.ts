@@ -1,6 +1,6 @@
 import { createInstance, i18n } from "i18next";
 import { initReactI18next } from "react-i18next/initReactI18next";
-import { headers, cookies } from "next/headers";
+import { cookies } from "next/headers";
 
 import { options } from "@/locale/options";
 import { fallbackLng } from "./detectLng";
