@@ -1,7 +1,6 @@
 import { UserNav } from "@/components/Navbar/UserNav";
 import { Search } from "@/components/Navbar/Search";
 import { MainNav } from "@/components/Navbar/MainNav";
-import Toggle from "@/components/Navbar/Toggle";
 
 export default function DashboardLayout({ children }: React.PropsWithChildren) {
   return (
@@ -12,7 +11,6 @@ export default function DashboardLayout({ children }: React.PropsWithChildren) {
           <div className="hidden ms-auto md:flex items-center gap-x-4">
             <Search />
             <UserNav />
-            <Toggle />
           </div>
         </div>
       </div>
