@@ -1,16 +1,17 @@
 import { language } from "@/services/type";
+import Cookies from "js-cookie";
 
 export enum ThemeEnum {
   light = "light",
   dark = "dark",
 }
-export enum DirectionType {
+export enum DirectionEnum {
   rtl = "rtl",
   ltr = "ltr",
 }
 export const fallbackTheme = ThemeEnum.dark;
 export const fallbackLanguage = language.en;
-export const fallbackDirection = DirectionType.ltr;
+export const fallbackDirection = DirectionEnum.ltr;
 
 export function getTheme(theme: unknown): ThemeEnum {
   switch (theme) {
@@ -32,13 +33,19 @@ export function getLanguage(lng: unknown): language {
       return fallbackLanguage;
   }
 }
-export function getDirection(lng: unknown): DirectionType {
+export function getDirection(lng: unknown): DirectionEnum {
   switch (lng) {
-    case DirectionType.rtl:
-      return DirectionType.rtl;
-    case DirectionType.ltr:
-      return DirectionType.ltr;
+    case language.fa:
+      return DirectionEnum.rtl;
+    case language.en:
+      return DirectionEnum.ltr;
     default:
       return fallbackDirection;
   }
+}
+export function setTheme(theme: ThemeEnum) {
+  Cookies.set("theme", theme);
+}
+export function setLanguage(lng: language) {
+  Cookies.set("language", lng);
 }
