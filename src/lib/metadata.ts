@@ -5,7 +5,7 @@ interface ParamsTypes {
   description: string;
 }
 
-export function generateMeta({ title, description }: ParamsTypes): Metadata {
+export function basedMeta({ title, description }: ParamsTypes): Metadata {
   return {
     title,
     description,
@@ -21,6 +21,5 @@ export function generateMeta({ title, description }: ParamsTypes): Metadata {
     alternates: {
       canonical: process.env.NEXT_PUBLIC_DOMAIN,
     },
-    robots: "noindex, nofollow",
   };
 }
