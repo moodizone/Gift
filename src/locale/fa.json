@@ -38,5 +38,10 @@
   "Switch between light and dark modes to match your vibe.": "بین تم‌های روشن و تیره انتخاب کن تا راحت‌تر با محیط کار کنی.",
   "Select a valid language to display": "یک زبان معتبر برای نمایش انتخاب کنید",
   "Appearance": "ظاهر برنامه",
-  "Customize the appearance of the app. Automatically switch between day and night themes.": "ظاهر اپلیکیشن رو به سلیقه خودت تنظیم کن."
+  "Customize the appearance of the app. Automatically switch between day and night themes.": "ظاهر اپلیکیشن رو به سلیقه خودت تنظیم کن.",
+  "Profile": "پروفایل",
+  "Account": " حساب کاربری",
+  "Settings": " تنظیمات",
+  "This is how others will see you on the site.": " اینطور شما را در سایت خواهند دید.",
+  "Manage your account settings and set e-mail preferences.": " تنظیمات حساب کاربری خود را مدیریت کرده و ترجیحات ایمیل خود را تنظیم کنید."
 }
