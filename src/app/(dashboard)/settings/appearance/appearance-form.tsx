@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ChevronDownIcon } from "@radix-ui/react-icons";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import Cookies from "js-cookie";
@@ -53,7 +52,7 @@ export function AppearanceForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 relative">
         <FormField
           control={form.control}
           name="language"
@@ -76,7 +75,6 @@ export function AppearanceForm() {
                   </SelectContent>
                 </Select>
               </FormControl>
-              <ChevronDownIcon className="absolute right-3 top-2.5 h-4 w-4 opacity-50" />
               <FormDescription>
                 {t(
                   "Choose the language you’re most comfortable with. Your choice will enhance your experience!"
