@@ -43,9 +43,3 @@ export function getDirection(lng: unknown): DirectionEnum {
       return fallbackDirection;
   }
 }
-export function setTheme(theme: ThemeEnum) {
-  Cookies.set("theme", theme);
-}
-export function setLanguage(lng: language) {
-  Cookies.set("language", lng);
-}

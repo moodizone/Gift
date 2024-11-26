@@ -20,7 +20,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { appearanceSchema } from "@/validation";
 import { useTranslation } from "react-i18next";
 import { language } from "@/services/type";
-import { getLanguage, getTheme, setLanguage, setTheme } from "@/lib/settings";
+import { getLanguage, getTheme, ThemeEnum } from "@/lib/settings";
 import {
   Select,
   SelectContent,
@@ -30,6 +30,13 @@ import {
 } from "@/components/ui/select";
 
 type AppearanceFormValues = z.infer<typeof appearanceSchema>;
+
+function setTheme(theme: ThemeEnum) {
+  Cookies.set("theme", theme);
+}
+function setLanguage(lng: language) {
+  Cookies.set("language", lng);
+}
 
 export function AppearanceForm() {
   const { t } = useTranslation();
@@ -52,7 +59,10 @@ export function AppearanceForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 relative">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-8 relative"
+      >
         <FormField
           control={form.control}
           name="language"

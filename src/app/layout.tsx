@@ -5,8 +5,8 @@ import { DirectionProvider } from "@/hoc/DirectionProvider";
 import ErrorBoundaryProvider from "@/hoc/ErrorBoundary";
 import { Toaster } from "@/components/ui/toaster";
 import { I18nextProvider } from "@/locale/client-config";
-import { getI18nInstance } from "@/locale/server-config";
-import { getDirection, getLanguage, getTheme } from "@/lib/settings";
+import { initI18nInstance } from "@/locale/server-config";
+import { getDirection, getTheme } from "@/lib/settings";
 
 export default async function RootLayout({
   children,
@@ -15,13 +15,11 @@ export default async function RootLayout({
 }>) {
   const cks = await cookies();
   const theme = getTheme(cks.get("theme")?.value);
-  const lang = getLanguage(cks.get("language")?.value);
-  const dir = getDirection(lang);
-  const i18n = await getI18nInstance();
-  await i18n.changeLanguage(lang);
+  const i18n = await initI18nInstance();
+  const dir = getDirection(i18n.language);
 
   return (
-    <html className={theme} lang={lang} dir={dir}>
+    <html className={theme} lang={i18n.language} dir={dir}>
       <body>
         <DirectionProvider>
           <I18nextProvider>

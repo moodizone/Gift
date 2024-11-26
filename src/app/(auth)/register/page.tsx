@@ -2,7 +2,7 @@ import * as React from "react";
 
 import RegisterForm from "../register/Form";
 import { generateMeta } from "@/lib/metadata";
-import { getI18nInstance } from "@/locale/server-config";
+import { initI18nInstance } from "@/locale/server-config";
 import Terms from "./Terms";
 
 export const metadata = generateMeta({
@@ -12,7 +12,7 @@ export const metadata = generateMeta({
 });
 
 async function page() {
-  const i18n = await getI18nInstance();
+  const i18n = await initI18nInstance();
   return (
     <div className="lg:p-8">
       <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
