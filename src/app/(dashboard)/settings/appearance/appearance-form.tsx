@@ -74,7 +74,7 @@ export function AppearanceForm() {
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
-                  <FormControl>
+                  <FormControl className="w-[200px]">
                     <SelectTrigger>
                       <SelectValue placeholder="Select a verified email to display" />
                     </SelectTrigger>
