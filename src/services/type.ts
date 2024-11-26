@@ -31,9 +31,10 @@ export interface AuthLoginResponse {
   email: string;
   id: number;
   tel: string | null;
-  name: string | null;
+  firstName: string | null;
+  lastName: string | null;
   gender: gender | null;
-  age: Date | null;
+  birthday: Date | null;
   profilePicture: string | null;
   token: string;
   language: language | null;
@@ -48,7 +49,8 @@ export interface AuthEmailAvailabilityBody {
 }
 export interface UserUpdateBody {
   tel?: string;
-  name?: string;
+  firstName?: string;
+  lastName?: string;
   gender?: gender;
   age?: Date;
 }
