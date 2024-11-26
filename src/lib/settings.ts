@@ -1,5 +1,4 @@
 import { language } from "@/services/type";
-import Cookies from "js-cookie";
 
 export enum ThemeEnum {
   light = "light",
