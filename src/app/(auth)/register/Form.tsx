@@ -26,8 +26,10 @@ import { emailAvailability, register } from "@/services/auth";
 import { APIError } from "@/lib/fetch";
 import { useToast } from "@/hooks/use-toast";
 import { toastError } from "@/lib/toasHandlers";
+import { useUserSlice } from "@/store/user";
 
 export default function RegisterForm() {
+  const { login: dispatch } = useUserSlice();
   const { t } = useTranslation();
   const router = useRouter();
   const emailId = React.useId();
@@ -71,6 +73,9 @@ export default function RegisterForm() {
     try {
       const response = await register({ email, password });
       if (response) {
+        // store user data
+        dispatch(response);
+
         Cookies.set("token", response.token, { expires: 1 });
         toast({
           title: t("Welcome"),

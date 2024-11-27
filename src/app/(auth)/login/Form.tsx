@@ -24,8 +24,10 @@ import {
 import { login } from "@/services/auth";
 import { APIError } from "@/lib/fetch";
 import { useToast } from "@/hooks/use-toast";
+import { useUserSlice } from "@/store/user";
 
 export default function LoginForm() {
+  const { login: dispatch } = useUserSlice();
   const { t } = useTranslation();
   const router = useRouter();
   const emailId = React.useId();
@@ -46,6 +48,9 @@ export default function LoginForm() {
     try {
       const response = await login({ email, password });
       if (response) {
+        // store user data in slice
+        dispatch(response);
+
         Cookies.set("token", response.token, { expires: 1 });
         toast({
           title: t("welcome-back-toast"),
