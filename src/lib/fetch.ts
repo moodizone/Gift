@@ -1,3 +1,5 @@
+import Cookies from "js-cookie";
+
 export class APIError extends Error {
   response: Response;
 
@@ -13,6 +15,14 @@ export async function clientFetch<T = unknown>(
 ) {
   const newHeaders = new Headers(options?.headers || {});
   newHeaders.set("Content-Type", "application/json");
+
+  // append token
+  const token = Cookies.get("token");
+
+  if (token) {
+    newHeaders.set("Authorization", `Bearer: ${token}`);
+  }
+
   const newOptions = {
     ...options,
     headers: newHeaders,
