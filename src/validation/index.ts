@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import i18next from "@/locale/client-config";
 
-import { gender, language, userRole } from "@/services/type";
+import { gender, language } from "@/services/type";
 import { ThemeEnum } from "@/lib/settings";
 
 const customErrorMap: z.ZodErrorMap = (issue) => {
@@ -40,28 +40,67 @@ const customErrorMap: z.ZodErrorMap = (issue) => {
 
 z.setErrorMap(customErrorMap);
 
-const telSchema = z.string().min(3).max(256).optional();
-const nameSchema = z.string().max(256).optional();
+const telSchema = z.string().min(3).max(256);
+const firstNameSchema = z.string().max(256);
+const lastNameSchema = z.string().max(256);
+const bioSchema = z.string().max(1000);
+const addressSchema = z.string().max(1000);
 export const emailSchema = z.string().email().max(256);
 const passwordSchema = z.string().min(6).max(256);
-const roleSchema = z.nativeEnum(userRole).optional();
-const genderSchema = z.nativeEnum(gender).optional();
-const ageSchema = z.number().int().positive().optional();
+const genderSchema = z.nativeEnum(gender);
 const languageSchema = z.nativeEnum(language);
 const themeSchema = z.nativeEnum(ThemeEnum);
+const dateSchema = z.string().datetime().pipe(z.coerce.date());
+const boundedDateSchema = dateSchema.superRefine((date, { path, addIssue }) => {
+  const fieldName = `${path[0]}`;
+
+  // reject future date
+  if (date > new Date()) {
+    addIssue({
+      code: z.ZodIssueCode.custom,
+      path,
+      message: `${fieldName} cannot be in the future`,
+    });
+  }
+
+  const hundredYearsAgo = new Date();
+  hundredYearsAgo.setFullYear(hundredYearsAgo.getFullYear() - 200);
+
+  // reject too old date
+  if (date < hundredYearsAgo) {
+    addIssue({
+      code: z.ZodIssueCode.custom,
+      path,
+      message: `${fieldName} cannot be more than 200 years ago`,
+    });
+  }
+});
+const optionalBoundedDateSchema = z
+  .string()
+  .optional()
+  .refine((value) => {
+    if (!Boolean(value)) return true;
+
+    const { success } = boundedDateSchema.safeParse(value);
+    return success;
+  });
+const optionalTelSchema = z
+  .string()
+  .optional()
+  .refine((value) => {
+    if (!Boolean(value)) return true;
+
+    const { success } = telSchema.safeParse(value);
+    return success;
+  });
 
 export const appearanceSchema = z.object({
   theme: themeSchema,
   language: languageSchema,
 });
 export const createUserSchema = z.object({
-  tel: telSchema,
-  name: nameSchema,
   email: emailSchema,
   password: passwordSchema,
-  gender: genderSchema,
-  age: ageSchema,
-  role: roleSchema,
 });
 export const loginSchema = z.object({
   email: emailSchema,
@@ -69,4 +108,13 @@ export const loginSchema = z.object({
 });
 export const emailAvailabilitySchema = z.object({
   email: emailSchema,
+});
+export const updateUserSchema = z.object({
+  tel: optionalTelSchema,
+  firstName: firstNameSchema.optional(),
+  lastName: lastNameSchema.optional(),
+  gender: genderSchema.optional(),
+  birthday: optionalBoundedDateSchema,
+  bio: bioSchema.optional(),
+  address: addressSchema.optional(),
 });
