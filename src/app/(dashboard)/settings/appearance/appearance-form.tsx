@@ -76,7 +76,7 @@ export function AppearanceForm() {
                 >
                   <FormControl className="w-[200px]">
                     <SelectTrigger>
-                      <SelectValue placeholder="Select a verified email to display" />
+                      <SelectValue />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
