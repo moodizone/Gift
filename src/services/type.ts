@@ -38,6 +38,8 @@ export interface AuthLoginResponse {
   profilePicture: string | null;
   token: string;
   language: language | null;
+  bio: string | null;
+  address: string | null;
 }
 export interface AuthRegisterBody {
   email: string;
@@ -53,5 +55,8 @@ export interface UserUpdateBody {
   lastName?: string;
   gender?: gender;
   birthday?: string;
+  bio?: string;
+  address?: string;
 }
 export type UserUpdateResponse = Omit<AuthLoginResponse, "token">;
+export type UserMeResponse = Omit<AuthLoginResponse, "token">;
