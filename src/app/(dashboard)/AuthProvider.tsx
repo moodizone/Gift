@@ -6,7 +6,7 @@ import { UserNav } from "@/components/Navbar/UserNav";
 import { serverFetch } from "@/lib/serverFetch";
 import { UserMeResponse } from "@/services/type";
 import Store from "./Store";
-import RedirectToLoginPage from "../RedirectToLoginPage";
+import Unauthorized from "../Unauthorized";
 
 async function getMe() {
   const response = await serverFetch<UserMeResponse>("/user/me");
@@ -35,7 +35,7 @@ async function AuthProvider({ children }: React.PropsWithChildren) {
     );
   } catch {
     // redirect to login page
-    return <RedirectToLoginPage />;
+    return <Unauthorized />;
   }
 }
 
