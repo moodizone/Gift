@@ -1,12 +1,18 @@
-import { Metadata } from "next";
-
 import { Separator } from "@/components/ui/separator";
-import { ProfileForm } from "./profile-form";
 import { initI18nInstance } from "@/locale/server-config";
+import { basedMeta } from "@/lib/metadata";
+import { ProfileForm } from "./profile-form";
 
-export const metadata: Metadata = {
-  title: "Settings",
-};
+export async function generateMetadata() {
+  const i18n = await initI18nInstance();
+  return basedMeta({
+    title: i18n.t("Settings"),
+    description: i18n.t(
+      "Manage and update your personal information on your profile page for a personalized experience."
+    ),
+    privateMode: true,
+  });
+}
 
 export default async function SettingsProfilePage() {
   const i18n = await initI18nInstance();
