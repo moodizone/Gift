@@ -8,7 +8,10 @@ import { useUserSlice } from "@/store/user";
 function Unauthorized() {
   const { logout } = useUserSlice();
   const { t } = useTranslation();
-  const nextURL = `/login?next=${window.location.pathname}${window.location.search}`;
+  const decoded = encodeURIComponent(
+    window.location.pathname + window.location.search
+  );
+  const nextURL = `/login?next=${decoded}`;
 
   React.useEffect(() => {
     logout();
