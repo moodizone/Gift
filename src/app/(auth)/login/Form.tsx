@@ -4,7 +4,7 @@ import * as React from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Cookies from "js-cookie";
 import { useTranslation } from "react-i18next";
 
@@ -29,6 +29,7 @@ import { useUserSlice } from "@/store/user";
 export default function LoginForm() {
   const { login: dispatch } = useUserSlice();
   const { t } = useTranslation();
+  const searchParam = useSearchParams();
   const router = useRouter();
   const emailId = React.useId();
   const passwordId = React.useId();
@@ -56,7 +57,13 @@ export default function LoginForm() {
           title: t("welcome-back-toast"),
           description: t("You’re logged in and ready to go."),
         });
-        router.push("/overview");
+        const next = searchParam.get("next");
+
+        if (next) {
+          router.push(next);
+        } else {
+          router.push("/overview");
+        }
       }
     } catch (error) {
       if (error instanceof APIError) {
