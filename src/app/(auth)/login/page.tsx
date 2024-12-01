@@ -1,8 +1,8 @@
 import * as React from "react";
 
 import { basedMeta } from "@/lib/metadata";
-import LoginForm from "./Form";
 import { initI18nInstance } from "@/locale/server-config";
+import LoginProvider from "./LoginProvider";
 
 export async function generateMetadata() {
   const i18n = await initI18nInstance();
@@ -27,7 +27,7 @@ async function page() {
             {i18n.t("Sign in to explore personalized features and more.")}
           </p>
         </div>
-        <LoginForm />
+        <LoginProvider />
       </div>
     </div>
   );

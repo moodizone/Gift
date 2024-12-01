@@ -2,7 +2,7 @@
 import { z } from "zod";
 import * as React from "react";
 import { useTranslation } from "react-i18next";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import { userPasswordSchema } from "@/validation";
 import { useUserSlice } from "@/store/user";
@@ -23,18 +23,25 @@ const defaultValues: AccountFormValues = {
 function AccountProvider() {
   const router = useRouter();
   const { t } = useTranslation();
+  const searchParams = useSearchParams();
   const { loginData, logout } = useUserSlice();
 
   async function onSubmit(data: AccountFormValues) {
     if (loginData) {
       try {
         await updateUserPassword(loginData?.id, data);
+        const encodedEmail = encodeURIComponent(loginData.email);
+        const encodedNext = encodeURIComponent(window.location.pathname);
+        const queryString = new URLSearchParams(searchParams.toString());
+        queryString.set("email", encodedEmail);
+        queryString.set("next", encodedNext);
+
         logout();
         toast({
           title: t("Success"),
           description: t("Your password has been updated successfully."),
         });
-        router.push(`/login?email=${encodeURIComponent(loginData.email)}`);
+        router.push(`/login?${queryString.toString()}`);
       } catch (error) {
         if (error instanceof APIError) {
           // display banner errors
