@@ -74,5 +74,14 @@
   "Back to Login": "Back to Login",
   "Update profile": "Update profile",
   "Success": "Success",
-  "Changes saved. You're all set": "Changes saved. You're all set! 📂"
+  "Changes saved. You're all set": "Changes saved. You're all set! 📂",
+  "emailH": "This is your registered email. It’s fixed in stone—your unchanging link to us.",
+  "Account Settings": "Account Settings",
+  "Account SettingsH": "Your gateway to all things secure and serene! ",
+  "oldPassword": "Old Password",
+  "oldPasswordH": "Just making sure it’s really you! Enter your current password to proceed with changes.",
+  "newPassword": "New Password",
+  "newPasswordH": "Choose a strong password to keep your account secure.",
+  "Update Password": "Update Password",
+  "Your password has been updated successfully.": "Your password has been updated successfully. Please log in to continue"
 }
