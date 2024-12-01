@@ -118,3 +118,8 @@ export const updateUserSchema = z.object({
   bio: bioSchema.optional(),
   address: addressSchema.optional(),
 });
+export const userPasswordSchema = z.object({
+  newPassword: passwordSchema,
+  oldPassword: passwordSchema,
+  email: emailSchema,
+});
