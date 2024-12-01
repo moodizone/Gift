@@ -44,8 +44,8 @@ function AccountProvider() {
         router.push(`/login?${queryString.toString()}`);
       } catch (error) {
         if (error instanceof APIError) {
-          // display banner errors
-          toastError(toast, error);
+          // display banner errors and skip unauthorized banner
+          toastError(toast, error, true);
         }
       }
     }
