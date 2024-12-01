@@ -1,13 +1,10 @@
-"use client";
 import * as React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { useTranslation } from "react-i18next";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
+import { useForm } from "react-hook-form";
 
-import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -21,7 +18,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { updateUserSchema } from "@/validation";
-import { useUserSlice } from "@/store/user";
 import {
   Select,
   SelectContent,
@@ -37,71 +33,31 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
-import { updateUserProfile } from "@/services/user";
-import { APIError } from "@/lib/fetch";
-import { toastError } from "@/lib/toasHandlers";
+import { ProfileFormValues } from "./ProfileProvider";
 
-type ProfileFormValues = z.infer<typeof updateUserSchema>;
+interface PropsType {
+  initialValue: ProfileFormValues;
+  onSubmit(data: ProfileFormValues): Promise<void>;
+}
 
-const defaultValues = {
-  firstName: "",
-  lastName: "",
-  tel: "",
-  birthday: "",
-  address: "",
-  bio: "",
-};
-
-export function ProfileForm() {
-  const { toast } = useToast();
+export function ProfileForm({ initialValue, onSubmit }: PropsType) {
   const { t } = useTranslation();
-  const { update, loginData } = useUserSlice();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(updateUserSchema),
-    defaultValues,
+    defaultValues: initialValue,
     mode: "onChange",
   });
-
-  async function onSubmit(data: ProfileFormValues) {
-    if (loginData?.id) {
-      setIsLoading(true);
-
-      try {
-        const response = await updateUserProfile(loginData?.id, data);
-        update(response);
-        toast({
-          title: t("Success"),
-          description: t("Changes saved. You're all set"),
-        });
-      } catch (error) {
-        if (error instanceof APIError) {
-          // display banner errors
-          toastError(toast, error);
-        }
-      } finally {
-        setIsLoading(false);
-      }
-    }
+  async function submitHandler(data: ProfileFormValues) {
+    setIsLoading(true);
+    onSubmit(data).finally(() => {
+      setIsLoading(false);
+    });
   }
 
-  React.useEffect(() => {
-    if (loginData) {
-      form.reset({
-        firstName: loginData.firstName ?? defaultValues.firstName,
-        lastName: loginData.lastName ?? defaultValues.lastName,
-        gender: loginData.gender ?? undefined,
-        tel: loginData.tel ?? defaultValues.tel,
-        birthday: loginData.birthday ?? defaultValues.birthday,
-        address: loginData.address ?? defaultValues.address,
-        bio: loginData.bio ?? defaultValues.bio,
-      });
-    }
-  }, [form, loginData]);
-
-  return loginData ? (
+  return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(submitHandler)} className="space-y-8">
         <FormField
           control={form.control}
           name="firstName"
@@ -174,7 +130,6 @@ export function ProfileForm() {
         />
         <FormField
           control={form.control}
-          defaultValue={loginData.gender ?? undefined}
           name="gender"
           render={({ field }) => {
             return (
@@ -254,5 +209,5 @@ export function ProfileForm() {
         </Button>
       </form>
     </Form>
-  ) : null;
+  );
 }

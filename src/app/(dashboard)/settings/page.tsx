@@ -1,7 +1,7 @@
 import { Separator } from "@/components/ui/separator";
 import { initI18nInstance } from "@/locale/server-config";
 import { basedMeta } from "@/lib/metadata";
-import { ProfileForm } from "./profile-form";
+import ProfileProvider from "./ProfileProvider";
 
 export async function generateMetadata() {
   const i18n = await initI18nInstance();
@@ -25,7 +25,7 @@ export default async function SettingsProfilePage() {
         </p>
       </div>
       <Separator />
-      <ProfileForm />
+      <ProfileProvider />
     </div>
   );
 }
