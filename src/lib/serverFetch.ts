@@ -1,15 +1,7 @@
-import Cookies from "js-cookie";
+import { cookies } from "next/headers";
+import { APIError } from "./fetch";
 
-export class APIError extends Error {
-  response: Response;
-
-  constructor(r: Response) {
-    super(r.statusText);
-    this.response = r;
-  }
-}
-
-export async function clientFetch<T = unknown>(
+export async function serverFetch<T = unknown>(
   url: string,
   options?: RequestInit
 ) {
@@ -17,7 +9,8 @@ export async function clientFetch<T = unknown>(
   newHeaders.set("Content-Type", "application/json");
 
   // append token
-  const token = Cookies.get("token");
+  const cks = await cookies();
+  const token = cks.get("token")?.value;
 
   if (token) {
     newHeaders.set("Authorization", `Bearer: ${token}`);

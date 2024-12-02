@@ -1,15 +1,19 @@
-import { toast } from "@/hooks/use-toast";
 import Link from "next/link";
 import { Trans } from "react-i18next";
 
-import { APIError } from "./fetch";
+import { toast } from "@/hooks/use-toast";
 import { ErrorType } from "@/services/type";
+import { APIError } from "@/lib/fetch";
 
-export async function toastError(ins: typeof toast, error: APIError) {
-  const { href } = window.location;
-  const encoded = encodeURIComponent(href);
+export async function toastError(
+  ins: typeof toast,
+  error: APIError,
+  skipUnauthorized: boolean = false
+) {
+  const { pathname, search } = window.location;
+  const encoded = encodeURIComponent(pathname + search);
   // unauthorized error
-  if (error.response.status === 401) {
+  if (error.response.status === 401 && !skipUnauthorized) {
     ins({
       title: "Unauthorized Access 🔒",
       description: (

@@ -3,9 +3,24 @@ import { Metadata } from "next";
 interface ParamsTypes {
   title: string;
   description: string;
+  privateMode?: boolean;
 }
 
-export function generateMeta({ title, description }: ParamsTypes): Metadata {
+export function basedMeta({
+  title,
+  description,
+  privateMode = false,
+}: ParamsTypes): Metadata {
+  if (privateMode) {
+    return {
+      title,
+      description,
+      alternates: {
+        canonical: process.env.NEXT_PUBLIC_DOMAIN,
+      },
+    };
+  }
+
   return {
     title,
     description,
@@ -21,6 +36,5 @@ export function generateMeta({ title, description }: ParamsTypes): Metadata {
     alternates: {
       canonical: process.env.NEXT_PUBLIC_DOMAIN,
     },
-    robots: "noindex, nofollow",
   };
 }

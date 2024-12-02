@@ -1,18 +1,22 @@
 import * as React from "react";
 
 import RegisterForm from "../register/Form";
-import { generateMeta } from "@/lib/metadata";
-import { getI18nInstance } from "@/locale/server-config";
+import { basedMeta } from "@/lib/metadata";
+import { initI18nInstance } from "@/locale/server-config";
 import Terms from "./Terms";
 
-export const metadata = generateMeta({
-  title: "Register",
-  description:
-    "Sign up to join our platform and unlock exclusive features tailored to your needs.",
-});
+export async function generateMetadata() {
+  const i18n = await initI18nInstance();
+  return basedMeta({
+    title: i18n.t("Register"),
+    description: i18n.t(
+      "Sign up to join our platform and unlock exclusive features tailored to your needs."
+    ),
+  });
+}
 
 async function page() {
-  const i18n = await getI18nInstance();
+  const i18n = await initI18nInstance();
   return (
     <div className="lg:p-8">
       <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">

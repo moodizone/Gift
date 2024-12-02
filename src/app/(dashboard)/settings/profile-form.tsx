@@ -1,12 +1,10 @@
-"use client";
-
-import Link from "next/link";
+import * as React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useFieldArray, useForm } from "react-hook-form";
-import { z } from "zod";
+import { useTranslation } from "react-i18next";
+import { format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
+import { useForm } from "react-hook-form";
 
-import { cn } from "@/lib/utils";
-import { toast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -18,6 +16,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { updateUserSchema } from "@/validation";
 import {
   Select,
   SelectContent,
@@ -25,108 +25,153 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
+import { gender } from "@/services/type";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
+import { Calendar } from "@/components/ui/calendar";
+import { ProfileFormValues } from "./ProfileProvider";
 
-const profileFormSchema = z.object({
-  username: z
-    .string()
-    .min(2, {
-      message: "Username must be at least 2 characters.",
-    })
-    .max(30, {
-      message: "Username must not be longer than 30 characters.",
-    }),
-  email: z
-    .string({
-      required_error: "Please select an email to display.",
-    })
-    .email(),
-  bio: z.string().max(160).min(4),
-  urls: z
-    .array(
-      z.object({
-        value: z.string().url({ message: "Please enter a valid URL." }),
-      })
-    )
-    .optional(),
-});
+interface PropsType {
+  initialValue: ProfileFormValues;
+  onSubmit(data: ProfileFormValues): Promise<void>;
+}
 
-type ProfileFormValues = z.infer<typeof profileFormSchema>;
-
-// This can come from your database or API.
-const defaultValues: Partial<ProfileFormValues> = {
-  bio: "I own a computer.",
-  urls: [
-    { value: "https://shadcn.com" },
-    { value: "http://twitter.com/shadcn" },
-  ],
-};
-
-export function ProfileForm() {
+export function ProfileForm({ initialValue, onSubmit }: PropsType) {
+  const { t } = useTranslation();
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const form = useForm<ProfileFormValues>({
-    resolver: zodResolver(profileFormSchema),
-    defaultValues,
+    resolver: zodResolver(updateUserSchema),
+    defaultValues: initialValue,
     mode: "onChange",
   });
-
-  const { fields, append } = useFieldArray({
-    name: "urls",
-    control: form.control,
-  });
-
-  function onSubmit(data: ProfileFormValues) {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
+  async function submitHandler(data: ProfileFormValues) {
+    setIsLoading(true);
+    onSubmit(data).finally(() => {
+      setIsLoading(false);
     });
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(submitHandler)} className="space-y-8">
         <FormField
           control={form.control}
-          name="username"
+          name="firstName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>{t("firstName")}</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input {...field} />
               </FormControl>
-              <FormDescription>
-                This is your public display name. It can be your real name or a
-                pseudonym. You can only change this once every 30 days.
-              </FormDescription>
+              <FormDescription>{t("firstNameH")}</FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
         <FormField
           control={form.control}
-          name="email"
+          name="lastName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <FormLabel>{t("lastName")}</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormDescription>{t("lastNameH")}</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="birthday"
+          render={({ field }) => (
+            <FormItem className="flex flex-col">
+              <FormLabel>{t("birthday")}</FormLabel>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      variant={"outline"}
+                      className={cn(
+                        "w-[240px] ps-3 rtl:text-right text-left font-normal"
+                      )}
+                    >
+                      {field.value ? format(field.value, "PPP") : null}
+                      <CalendarIcon className="ms-auto h-4 w-4 opacity-50" />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    captionLayout="dropdown"
+                    mode="single"
+                    selected={field.value ? new Date(field.value) : undefined}
+                    onSelect={(e) => {
+                      if (e) {
+                        field.onChange(e.toISOString());
+                      }
+                    }}
+                    disabled={(date) =>
+                      date > new Date() || date < new Date("1900-01-01")
+                    }
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+              <FormDescription>{t("birthdayH")}</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="gender"
+          render={({ field }) => {
+            return (
+              <FormItem>
+                <FormLabel>{t("gender")}</FormLabel>
                 <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a verified email to display" />
-                  </SelectTrigger>
+                  <Select
+                    defaultValue={field.value}
+                    onValueChange={field.onChange}
+                  >
+                    <FormControl className="w-[240px]">
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value={gender.male}>{t("male")}</SelectItem>
+                      <SelectItem value={gender.female}>
+                        {t("female")}
+                      </SelectItem>
+                      <SelectItem value={gender.others}>
+                        {t("others")}
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
                 </FormControl>
-                <SelectContent>
-                  <SelectItem value="m@example.com">m@example.com</SelectItem>
-                  <SelectItem value="m@google.com">m@google.com</SelectItem>
-                  <SelectItem value="m@support.com">m@support.com</SelectItem>
-                </SelectContent>
-              </Select>
-              <FormDescription>
-                You can manage verified email addresses in your{" "}
-                <Link href="/examples/forms">email settings</Link>.
-              </FormDescription>
+                <FormDescription>{t("genderH")}</FormDescription>
+                <FormMessage />
+              </FormItem>
+            );
+          }}
+        />
+        <FormField
+          control={form.control}
+          name="tel"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>{t("tel")}</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormDescription>{t("telH")}</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -136,55 +181,32 @@ export function ProfileForm() {
           name="bio"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Bio</FormLabel>
+              <FormLabel>{t("bio")}</FormLabel>
               <FormControl>
-                <Textarea
-                  placeholder="Tell us a little bit about yourself"
-                  className="resize-none"
-                  {...field}
-                />
+                <Textarea className="resize-none" {...field} maxLength={1000} />
               </FormControl>
-              <FormDescription>
-                You can <span>@mention</span> other users and organizations to
-                link to them.
-              </FormDescription>
+              <FormDescription>{t("bioH")}</FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <div>
-          {fields.map((field, index) => (
-            <FormField
-              control={form.control}
-              key={field.id}
-              name={`urls.${index}.value`}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className={cn(index !== 0 && "sr-only")}>
-                    URLs
-                  </FormLabel>
-                  <FormDescription className={cn(index !== 0 && "sr-only")}>
-                    Add links to your website, blog, or social media profiles.
-                  </FormDescription>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          ))}
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            className="mt-2"
-            onClick={() => append({ value: "" })}
-          >
-            Add URL
-          </Button>
-        </div>
-        <Button type="submit">Update profile</Button>
+        <FormField
+          control={form.control}
+          name="address"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>{t("address")}</FormLabel>
+              <FormControl>
+                <Textarea className="resize-none" {...field} maxLength={1000} />
+              </FormControl>
+              <FormDescription>{t("addressH")}</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button disabled={!form.formState.isDirty || isLoading} type="submit">
+          {t("Update profile")}
+        </Button>
       </form>
     </Form>
   );

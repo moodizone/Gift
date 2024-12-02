@@ -4,6 +4,7 @@ import {
   AuthLoginBody,
   AuthLoginResponse,
   AuthRegisterBody,
+  AuthRegisterResponse,
 } from "./type";
 
 export async function emailAvailability({ email }: AuthEmailAvailabilityBody) {
@@ -13,7 +14,7 @@ export async function emailAvailability({ email }: AuthEmailAvailabilityBody) {
   });
 }
 export async function register({ email, password }: AuthRegisterBody) {
-  return clientFetch<AuthLoginResponse>("/auth/register", {
+  return clientFetch<AuthRegisterResponse>("/auth/register", {
     method: "POST",
     body: JSON.stringify({ email, password }),
   });

@@ -1,18 +1,11 @@
-"use client";
-
 import * as React from "react";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
-import Cookies from "js-cookie";
 import { useTranslation } from "react-i18next";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import { cn } from "@/lib/utils";
 import { Icons } from "@/components/SVGR";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { loginSchema } from "@/validation";
 import {
   Form,
   FormControl,
@@ -21,38 +14,29 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { login } from "@/services/auth";
+import { useForm } from "react-hook-form";
+import { loginSchema } from "@/validation";
 import { APIError } from "@/lib/fetch";
-import { useToast } from "@/hooks/use-toast";
+import { LoginFormType } from "./LoginProvider";
 
-export default function LoginForm() {
+interface PropsType {
+  initialValues: LoginFormType;
+  onSubmit(data: LoginFormType): Promise<void>;
+}
+
+export default function LoginForm({ onSubmit, initialValues }: PropsType) {
   const { t } = useTranslation();
-  const router = useRouter();
   const emailId = React.useId();
   const passwordId = React.useId();
-  const { toast } = useToast();
-  const form = useForm<z.infer<typeof loginSchema>>({
-    resolver: zodResolver(loginSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-
-  async function onSubmit({ email, password }: z.infer<typeof loginSchema>) {
+  const form = useForm<LoginFormType>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: initialValues,
+  });
+  async function submitHandler(values: LoginFormType) {
     setIsLoading(true);
-
     try {
-      const response = await login({ email, password });
-      if (response) {
-        Cookies.set("token", response.token, { expires: 1 });
-        toast({
-          title: t("welcome-back-toast"),
-          description: t("You’re logged in and ready to go."),
-        });
-        router.push("/overview");
-      }
+      await onSubmit(values);
     } catch (error) {
       if (error instanceof APIError) {
         return form.setError("email", {
@@ -69,7 +53,7 @@ export default function LoginForm() {
     <div className={cn("grid gap-6")}>
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(onSubmit)}
+          onSubmit={form.handleSubmit(submitHandler)}
           className="grid gap-y-2"
           noValidate
         >

@@ -1,12 +1,12 @@
 import * as React from "react";
 
 import UpperLink from "./UpperLink";
-import { getI18nInstance } from "@/locale/server-config";
+import { initI18nInstance } from "@/locale/server-config";
 
 export default async function AuthLayout({
   children,
 }: React.PropsWithChildren) {
-  const i18n = await getI18nInstance();
+  const i18n = await initI18nInstance();
   return (
     <div className="grid h-full grid-cols-1 md:grid-cols-2">
       <div className="flex items-center justify-center relative p-3 md:p-0">

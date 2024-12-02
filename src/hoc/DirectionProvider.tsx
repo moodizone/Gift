@@ -1,51 +1,31 @@
 "use client";
 import * as React from "react";
 import { DirectionProvider as RadixDirectionProvider } from "@radix-ui/react-direction";
+import { DirectionEnum, fallbackDirection, getDirection } from "@/lib/settings";
 
 type DirectionType = "rtl" | "ltr";
 interface DirectionContextType {
   direction: DirectionType;
-  toggleDirection(): void;
 }
 
 const DirectionContext = React.createContext<DirectionContextType>({
   direction: "rtl",
-  toggleDirection() {
-    return void 0;
-  },
 });
 DirectionContext.displayName = "DirectionContext";
 
-function DirectionProvider({ children }: React.PropsWithChildren) {
-  const [direction, setDirection] = React.useState<DirectionType>("rtl");
+export function DirectionProvider({ children }: React.PropsWithChildren) {
+  const [dir, setDir] = React.useState<DirectionEnum>(fallbackDirection);
 
-  function toggleDirection() {
-    const newDirection = direction === "rtl" ? "ltr" : "rtl";
+  React.useEffect(() => {
     const html = document.querySelector("html");
 
     if (html) {
-      html.setAttribute("dir", newDirection);
+      const lang = html.getAttribute("lang");
+      const dir = getDirection(lang);
+
+      setDir(dir);
     }
+  }, []);
 
-    setDirection(newDirection);
-  }
-
-  return (
-    <DirectionContext.Provider value={{ direction, toggleDirection }}>
-      <RadixDirectionProvider dir={direction}>
-        {children}
-      </RadixDirectionProvider>
-    </DirectionContext.Provider>
-  );
+  return <RadixDirectionProvider dir={dir}>{children}</RadixDirectionProvider>;
 }
-
-function useDirection() {
-  const context = React.useContext(DirectionContext);
-
-  if (!context) {
-    throw new Error(`"useDirection" must be used within "DirectionProvider"`);
-  }
-  return context;
-}
-
-export { useDirection, DirectionProvider };

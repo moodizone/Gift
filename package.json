@@ -2,6 +2,32 @@
   "name": "gift",
   "version": "0.1.0",
   "private": true,
+  "author": "Seyed Mohammad Alavi <moodizone@gmail.com>",
+  "description": "A Next.js showcase application for an e-commerce gift platform featuring a modern UI, localization, and advanced features.",
+  "license": "MIT",
+  "contributors": [
+    {
+      "name": "Seyed Mohammad Alavi",
+      "email": "moodizone@gmail.com",
+      "url": "https://github.com/your-username"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/gift-showcase.git"
+  },
+  "keywords": [
+    "Next.js",
+    "e-commerce",
+    "gifts",
+    "React",
+    "localization",
+    "tailwindcss",
+    "Radix UI"
+  ],
+  "bugs": {
+    "url": "https://github.com/your-username/gift-showcase/issues"
+  },
   "scripts": {
     "dev": "next dev -p 3006 --turbopack",
     "build": "next build",
@@ -48,7 +74,8 @@
     "recharts": "^2.13.3",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "zustand": "^5.0.1"
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.6",

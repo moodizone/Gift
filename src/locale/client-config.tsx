@@ -6,15 +6,13 @@ import { useAsync } from "react-use";
 import Cookies from "js-cookie";
 
 import { options } from "@/locale/options";
-import { fallbackLng } from "./detectLng";
-import { language } from "@/services/type";
+import { getLanguage } from "@/lib/settings";
 
 i18next.use(initReactI18next).init(options);
 
 export function I18nextProvider({ children }: React.PropsWithChildren) {
   const { value } = useAsync(async () => {
-    const cookie = Cookies.get("language");
-    const lang = cookie === language.fa ? language.fa : fallbackLng;
+    const lang = getLanguage(Cookies.get("language"));
     await i18next.changeLanguage(lang);
     return true;
   }, []);
