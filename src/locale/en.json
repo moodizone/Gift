@@ -83,5 +83,6 @@
   "newPassword": "New Password",
   "newPasswordH": "Choose a strong password to keep your account secure.",
   "Update Password": "Update Password",
-  "Your password has been updated successfully.": "Your password has been updated successfully. Please log in to continue"
+  "Your password has been updated successfully.": "Your password has been updated successfully. Please log in to continue",
+  "Back": "Back"
 }

@@ -83,5 +83,6 @@
   "newPassword": "رمز عبور جدید",
   "newPasswordH": "یک رمز عبور قوی انتخاب کنید تا حساب شما ایمن باقی بماند.",
   "Update Password": "بروزرسانی رمز عبور",
-  "Your password has been updated successfully.": "رمز عبور شما با موفقیت بروزرسانی شد. لطفاً دوباره وارد شوید تا ادامه دهید."
+  "Your password has been updated successfully.": "رمز عبور شما با موفقیت بروزرسانی شد. لطفاً دوباره وارد شوید تا ادامه دهید.",
+  "Back": "بازگشت"
 }
