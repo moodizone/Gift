@@ -2,14 +2,12 @@
 import * as React from "react";
 import { Terminal } from "lucide-react";
 import { ErrorBoundary } from "react-error-boundary";
-import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 
 function ErrorBoundaryProvider({ children }: React.PropsWithChildren) {
-  const router = useRouter();
   const { t } = useTranslation();
   return (
     <ErrorBoundary
@@ -25,7 +23,12 @@ function ErrorBoundaryProvider({ children }: React.PropsWithChildren) {
                   <code className="bg-zinc-200 dark:bg-zinc-900 p-3 rounded">
                     {error?.message}
                   </code>
-                  <Button className="w-full" onClick={router.refresh}>
+                  <Button
+                    className="w-full"
+                    onClick={() => {
+                      window.location.reload();
+                    }}
+                  >
                     {t("reload")}
                   </Button>
                 </AlertDescription>
