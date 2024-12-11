@@ -61,7 +61,7 @@ export function AppearanceForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8 relative"
+        className="space-y-8 relative max-w-[600px]"
       >
         <FormField
           control={form.control}

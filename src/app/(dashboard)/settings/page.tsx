@@ -1,7 +1,14 @@
-import { Separator } from "@/components/ui/separator";
 import { initI18nInstance } from "@/locale/server-config";
 import { basedMeta } from "@/lib/metadata";
 import ProfileProvider from "./ProfileProvider";
+import Layout from "../AuthProvider/layout";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export async function generateMetadata() {
   const i18n = await initI18nInstance();
@@ -14,18 +21,21 @@ export async function generateMetadata() {
   });
 }
 
-export default async function SettingsProfilePage() {
+export default async function ProfilePage() {
   const i18n = await initI18nInstance();
   return (
-    <div className="space-y-6">
-      <div>
-        <h3 className="text-lg font-medium">{i18n.t("Profile")}</h3>
-        <p className="text-sm text-muted-foreground">
-          {i18n.t("This is how others will see you on the site.")}
-        </p>
-      </div>
-      <Separator />
-      <ProfileProvider />
-    </div>
+    <Layout>
+      <Card className="border-0">
+        <CardHeader>
+          <CardTitle>{i18n.t("Profile")}</CardTitle>
+          <CardDescription>
+            {i18n.t("This is how others will see you on the site.")}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <ProfileProvider />
+        </CardContent>
+      </Card>
+    </Layout>
   );
 }

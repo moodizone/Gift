@@ -44,7 +44,10 @@ export function AccountForm({ initialValue, onSubmit }: PropsType) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(submitHandler)} className="space-y-8">
+      <form
+        onSubmit={form.handleSubmit(submitHandler)}
+        className="space-y-8 max-w-[600px]"
+      >
         <FormField
           control={form.control}
           name="email"
