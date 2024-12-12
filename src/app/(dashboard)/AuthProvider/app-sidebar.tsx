@@ -1,7 +1,15 @@
 "use client";
 
 import * as React from "react";
-import { Command, LifeBuoy, Map, Send, Settings2 } from "lucide-react";
+import {
+  Command,
+  Store,
+  Table,
+  LifeBuoy,
+  Send,
+  Settings2,
+  ChartColumn
+} from "lucide-react";
 import { useDirection } from "@radix-ui/react-direction";
 
 import {
@@ -26,6 +34,11 @@ const data = {
     avatar: "/avatars/shadcn.jpg",
   },
   navMain: [
+    {
+      title: "Products",
+      url: "/products",
+      icon: Store,
+    },
     {
       title: "Settings",
       url: "/settings",
@@ -60,9 +73,14 @@ const data = {
   ],
   projects: [
     {
-      name: "Travel",
-      url: "#",
-      icon: Map,
+      name: "Overview",
+      url: "/overview",
+      icon: ChartColumn,
+    },
+    {
+      name: "Tasks",
+      url: "/tasks",
+      icon: Table,
     },
   ],
 };
