@@ -72,9 +72,10 @@ export function AccountForm({ initialValue, onSubmit }: PropsType) {
                 <div className="relative">
                   <Input
                     {...field}
+                     className="pe-8"
                     type={showPassword.old ? "text" : "password"}
                   />
-                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 cursor-pointer">
+                  <div className="absolute inset-y-0 end-0 pe-3 flex items-center text-gray-400 cursor-pointer">
                     {showPassword.old ? (
                       <EyeOff
                         className="h-4 w-4"
@@ -114,9 +115,10 @@ export function AccountForm({ initialValue, onSubmit }: PropsType) {
                 <div className="relative">
                   <Input
                     {...field}
+                    className="pe-8"
                     type={showPassword.new ? "text" : "password"}
                   />
-                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 cursor-pointer">
+                  <div className="absolute inset-y-0 end-0 pe-3 flex items-center text-gray-400 cursor-pointer">
                     {showPassword.new ? (
                       <EyeOff
                         className="h-4 w-4"
