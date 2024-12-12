@@ -8,6 +8,7 @@ import {
   LogOut,
   Sparkles,
 } from "lucide-react";
+import { useDirection } from "@radix-ui/react-direction";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -25,6 +26,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { DirectionEnum } from "@/lib/settings";
 
 export function NavUser({
   user,
@@ -36,6 +38,8 @@ export function NavUser({
   };
 }) {
   const { isMobile } = useSidebar();
+  const direction = useDirection();
+  const side = direction === DirectionEnum.rtl ? "left" : "right";
 
   return (
     <SidebarMenu>
@@ -54,12 +58,12 @@ export function NavUser({
                 <span className="truncate font-semibold">{user.name}</span>
                 <span className="truncate text-xs">{user.email}</span>
               </div>
-              <ChevronsUpDown className="ml-auto size-4" />
+              <ChevronsUpDown className="ms-auto size-4" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
             className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
-            side={isMobile ? "bottom" : "right"}
+            side={isMobile ? "bottom" : side}
             align="end"
             sideOffset={4}
           >

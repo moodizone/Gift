@@ -7,6 +7,7 @@ import {
   Trash2,
   type LucideIcon,
 } from "lucide-react";
+import { useDirection } from "@radix-ui/react-direction";
 
 import {
   DropdownMenu,
@@ -24,6 +25,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { DirectionEnum } from "@/lib/settings";
 
 export function NavProjects({
   projects,
@@ -35,6 +37,8 @@ export function NavProjects({
   }[];
 }) {
   const { isMobile } = useSidebar();
+  const direction = useDirection();
+  const side = direction === DirectionEnum.rtl ? "left" : "right";
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
@@ -57,7 +61,7 @@ export function NavProjects({
               </DropdownMenuTrigger>
               <DropdownMenuContent
                 className="w-48"
-                side={isMobile ? "bottom" : "right"}
+                side={isMobile ? "bottom" : side}
                 align={isMobile ? "end" : "start"}
               >
                 <DropdownMenuItem>
