@@ -1,6 +1,9 @@
 "use client";
 
-import { ChevronRight, type LucideIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { ChevronRight, ChevronLeft, type LucideIcon } from "lucide-react";
+import { useDirection } from "@radix-ui/react-direction";
+import { usePathname } from "next/navigation";
 
 import {
   SidebarGroup,
@@ -18,6 +21,8 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import Link from "next/link";
+import { DirectionEnum } from "@/lib/settings";
 
 export function NavMain({
   items,
@@ -33,24 +38,33 @@ export function NavMain({
     }[];
   }[];
 }) {
+  const { t } = useTranslation();
+  const dir = useDirection();
+  const pathname = usePathname();
+  const chevron =
+    dir === DirectionEnum.rtl ? <ChevronLeft /> : <ChevronRight />;
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Platform</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
-          <Collapsible key={item.title} asChild defaultOpen={item.isActive}>
+          <Collapsible
+            key={item.title}
+            asChild
+            defaultOpen={pathname.startsWith(item.url)}
+          >
             <SidebarMenuItem>
-              <SidebarMenuButton asChild tooltip={item.title}>
-                <a href={item.url}>
+              <SidebarMenuButton asChild tooltip={t(item.title)}>
+                <Link href={item.url}>
                   <item.icon />
-                  <span>{item.title}</span>
-                </a>
+                  <span>{t(item.title)}</span>
+                </Link>
               </SidebarMenuButton>
               {item.items?.length ? (
                 <>
                   <CollapsibleTrigger asChild>
-                    <SidebarMenuAction className="data-[state=open]:rotate-90">
-                      <ChevronRight />
+                    <SidebarMenuAction className="ltr:data-[state=open]:rotate-90 rtl:data-[state=open]:rotate-[-90deg]">
+                      {chevron}
                       <span className="sr-only">Toggle</span>
                     </SidebarMenuAction>
                   </CollapsibleTrigger>
@@ -59,9 +73,9 @@ export function NavMain({
                       {item.items?.map((subItem) => (
                         <SidebarMenuSubItem key={subItem.title}>
                           <SidebarMenuSubButton asChild>
-                            <a href={subItem.url}>
-                              <span>{subItem.title}</span>
-                            </a>
+                            <Link href={subItem.url}>
+                              <span>{t(subItem.title)}</span>
+                            </Link>
                           </SidebarMenuSubButton>
                         </SidebarMenuSubItem>
                       ))}
