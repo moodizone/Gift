@@ -29,7 +29,7 @@ export default async function AppearancePage() {
 
   return (
     <Layout>
-      <Card className="border-0">
+      <Card className="border-0 shadow-none">
         <CardHeader>
           <CardTitle>{i18n.t("Appearance")}</CardTitle>
           <CardDescription>

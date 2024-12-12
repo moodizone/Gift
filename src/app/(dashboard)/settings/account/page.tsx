@@ -23,7 +23,7 @@ export default async function AccountPage() {
   const i18n = await initI18nInstance();
   return (
     <Layout>
-      <Card className="border-0">
+      <Card className="border-0 shadow-none">
         <CardHeader>
           <CardTitle>{i18n.t("Account Settings")}</CardTitle>
           <CardDescription>{i18n.t("Account SettingsH")}</CardDescription>

@@ -25,7 +25,7 @@ export default async function ProfilePage() {
   const i18n = await initI18nInstance();
   return (
     <Layout>
-      <Card className="border-0">
+      <Card className="border-0 shadow-none">
         <CardHeader>
           <CardTitle>{i18n.t("Profile")}</CardTitle>
           <CardDescription>
