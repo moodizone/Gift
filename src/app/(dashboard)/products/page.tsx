@@ -1,41 +1,39 @@
+import { initI18nInstance } from "@/locale/server-config";
+import Layout from "../AuthProvider/layout";
+import { basedMeta } from "@/lib/metadata";
 import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { Separator } from "@/components/ui/separator";
-import { SidebarTrigger } from "@/components/ui/sidebar";
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import ProductCard from "./product-card";
 
-export default function Page() {
+export async function generateMetadata() {
+  const i18n = await initI18nInstance();
+  return basedMeta({
+    title: i18n.t("Products"),
+    description: i18n.t("ProductsH"),
+    privateMode: true,
+  });
+}
+
+export default async function Page() {
+  const i18n = await initI18nInstance();
   return (
-    <>
-      <header className="flex h-16 shrink-0 items-center gap-2">
-        <div className="flex items-center gap-2 px-4">
-          <SidebarTrigger className="-ml-1" />
-          <Separator orientation="vertical" className="mr-2 h-4" />
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem className="hidden md:block">
-                <BreadcrumbLink href="#">
-                  Building Your Application
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator className="hidden md:block" />
-              <BreadcrumbItem>
-                <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-        </div>
-      </header>
-      <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-        <div className="min-h-[100vh] h-[100vh] overflow-auto flex-1 rounded-xl bg-muted/50 md:min-h-min">
-          Suspense
-        </div>
-      </div>
-    </>
+    <Layout>
+      <Card className="border-0 shadow-none">
+        <CardHeader>
+          <CardTitle>{i18n.t("Products")}</CardTitle>
+          <CardDescription>{i18n.t("ProductsH")}</CardDescription>
+        </CardHeader>
+        <CardContent className="grid gap-4 grid-cols-[repeat(auto-fit,360px)]">
+          {new Array(20).fill(1).map((_, index) => (
+            <ProductCard key={index} />
+          ))}
+        </CardContent>
+      </Card>
+    </Layout>
   );
 }
