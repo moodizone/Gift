@@ -9,6 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import ProductCard from "./product-card";
+import { DataTableToolbar } from "./toolbar";
 
 export async function generateMetadata() {
   const i18n = await initI18nInstance();
@@ -28,7 +29,10 @@ export default async function Page() {
           <CardTitle>{i18n.t("Products")}</CardTitle>
           <CardDescription>{i18n.t("ProductsH")}</CardDescription>
         </CardHeader>
-        <CardContent className="grid gap-4 grid-cols-[repeat(auto-fit,360px)]">
+        <CardContent className="grid gap-4 justify-center sm:justify-start grid-cols-[repeat(auto-fit,320px)]">
+          <div className="col-span-full">
+            <DataTableToolbar />
+          </div>
           {new Array(20).fill(1).map((_, index) => (
             <ProductCard key={index} />
           ))}
