@@ -27,6 +27,7 @@ import { APIError } from "@/lib/fetch";
 import { useToast } from "@/hooks/use-toast";
 import { toastError } from "@/lib/toasHandlers";
 import { useUserSlice } from "@/store/user";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function RegisterForm() {
   const { login: dispatch } = useUserSlice();
@@ -44,6 +45,7 @@ export default function RegisterForm() {
   });
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const email = form.watch("email");
+  const [showPassword, setShowPassword] = React.useState(false);
   useDebounce(checkEmailAvailability, 1500, [email]);
 
   async function checkEmailAvailability() {
@@ -117,6 +119,7 @@ export default function RegisterForm() {
                       autoCapitalize="none"
                       autoComplete="email"
                       autoCorrect="off"
+                      inputMode="email"
                       disabled={isLoading}
                       className="digit"
                     />
@@ -134,16 +137,36 @@ export default function RegisterForm() {
                 <FormItem>
                   <FormLabel htmlFor={passwordId}>{t("Password")}</FormLabel>
                   <FormControl>
-                    <Input
-                      {...field}
-                      id={passwordId}
-                      type="password"
-                      autoCapitalize="none"
-                      autoComplete="off"
-                      autoCorrect="off"
-                      disabled={isLoading}
-                      className="digit"
-                    />
+                    <div className="relative">
+                      <Input
+                        {...field}
+                        id={passwordId}
+                        type={showPassword ? "text" : "password"}
+                        autoCapitalize="none"
+                        autoComplete="off"
+                        autoCorrect="off"
+                        inputMode="text"
+                        disabled={isLoading}
+                        className="pe-8 digit"
+                      />
+                      <div className="absolute inset-y-0 end-0 pe-3 flex items-center text-gray-400 cursor-pointer">
+                        {showPassword ? (
+                          <Eye
+                            className="h-4 w-4"
+                            onClick={() => {
+                              setShowPassword((prev) => !prev);
+                            }}
+                          />
+                        ) : (
+                          <EyeOff
+                            className="h-4 w-4"
+                            onClick={() => {
+                              setShowPassword((prev) => !prev);
+                            }}
+                          />
+                        )}
+                      </div>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

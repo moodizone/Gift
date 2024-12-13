@@ -18,6 +18,7 @@ import { useForm } from "react-hook-form";
 import { loginSchema } from "@/validation";
 import { APIError } from "@/lib/fetch";
 import { LoginFormType } from "./LoginProvider";
+import { Eye, EyeOff } from "lucide-react";
 
 interface PropsType {
   initialValues: LoginFormType;
@@ -28,6 +29,7 @@ export default function LoginForm({ onSubmit, initialValues }: PropsType) {
   const { t } = useTranslation();
   const emailId = React.useId();
   const passwordId = React.useId();
+  const [showPassword, setShowPassword] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const form = useForm<LoginFormType>({
     resolver: zodResolver(loginSchema),
@@ -73,6 +75,7 @@ export default function LoginForm({ onSubmit, initialValues }: PropsType) {
                       autoCapitalize="none"
                       autoComplete="email"
                       autoCorrect="off"
+                      inputMode="email"
                       disabled={isLoading}
                       className="digit"
                     />
@@ -90,16 +93,36 @@ export default function LoginForm({ onSubmit, initialValues }: PropsType) {
                 <FormItem>
                   <FormLabel htmlFor={passwordId}>{t("Password")}</FormLabel>
                   <FormControl>
-                    <Input
-                      {...field}
-                      id={passwordId}
-                      type="password"
-                      autoCapitalize="none"
-                      autoComplete="off"
-                      autoCorrect="off"
-                      disabled={isLoading}
-                      className="digit"
-                    />
+                    <div className="relative">
+                      <Input
+                        {...field}
+                        className="pe-8 digit"
+                        id={passwordId}
+                        disabled={isLoading}
+                        autoCapitalize="none"
+                        autoComplete="off"
+                        autoCorrect="off"
+                        inputMode="text"
+                        type={showPassword ? "text" : "password"}
+                      />
+                      <div className="absolute inset-y-0 end-0 pe-3 flex items-center text-gray-400 cursor-pointer">
+                        {showPassword ? (
+                          <Eye
+                            className="h-4 w-4"
+                            onClick={() => {
+                              setShowPassword((prev) => !prev);
+                            }}
+                          />
+                        ) : (
+                          <EyeOff
+                            className="h-4 w-4"
+                            onClick={() => {
+                              setShowPassword((prev) => !prev);
+                            }}
+                          />
+                        )}
+                      </div>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

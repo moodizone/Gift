@@ -55,7 +55,16 @@ export function AccountForm({ initialValue, onSubmit }: PropsType) {
             <FormItem>
               <FormLabel>{t("Email")}</FormLabel>
               <FormControl>
-                <Input readOnly {...field} />
+                <Input
+                  autoCapitalize="none"
+                  autoComplete="email"
+                  autoCorrect="off"
+                  inputMode="email"
+                  className="digit"
+                  type="email"
+                  readOnly
+                  {...field}
+                />
               </FormControl>
               <FormDescription>{t("emailH")}</FormDescription>
               <FormMessage />
@@ -72,7 +81,11 @@ export function AccountForm({ initialValue, onSubmit }: PropsType) {
                 <div className="relative">
                   <Input
                     {...field}
-                     className="pe-8"
+                    className="pe-8"
+                    autoCapitalize="none"
+                    autoComplete="off"
+                    autoCorrect="off"
+                    inputMode="text"
                     type={showPassword.old ? "text" : "password"}
                   />
                   <div className="absolute inset-y-0 end-0 pe-3 flex items-center text-gray-400 cursor-pointer">
@@ -116,6 +129,10 @@ export function AccountForm({ initialValue, onSubmit }: PropsType) {
                   <Input
                     {...field}
                     className="pe-8"
+                    autoCapitalize="none"
+                    autoComplete="off"
+                    autoCorrect="off"
+                    inputMode="text"
                     type={showPassword.new ? "text" : "password"}
                   />
                   <div className="absolute inset-y-0 end-0 pe-3 flex items-center text-gray-400 cursor-pointer">
