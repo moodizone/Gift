@@ -9,7 +9,7 @@ interface DirectionContextType {
 }
 
 const DirectionContext = React.createContext<DirectionContextType>({
-  direction: "rtl",
+  direction: fallbackDirection,
 });
 DirectionContext.displayName = "DirectionContext";
 

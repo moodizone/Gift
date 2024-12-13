@@ -8,6 +8,7 @@ import { useDebounce } from "react-use";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { useTranslation } from "react-i18next";
+import { Eye, EyeOff } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Icons } from "@/components/SVGR";
@@ -27,7 +28,6 @@ import { APIError } from "@/lib/fetch";
 import { useToast } from "@/hooks/use-toast";
 import { toastError } from "@/lib/toasHandlers";
 import { useUserSlice } from "@/store/user";
-import { Eye, EyeOff } from "lucide-react";
 
 export default function RegisterForm() {
   const { login: dispatch } = useUserSlice();

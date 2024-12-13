@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useTranslation } from "react-i18next";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Eye, EyeOff } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Icons } from "@/components/SVGR";
@@ -18,7 +19,6 @@ import { useForm } from "react-hook-form";
 import { loginSchema } from "@/validation";
 import { APIError } from "@/lib/fetch";
 import { LoginFormType } from "./LoginProvider";
-import { Eye, EyeOff } from "lucide-react";
 
 interface PropsType {
   initialValues: LoginFormType;
