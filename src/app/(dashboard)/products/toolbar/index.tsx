@@ -5,10 +5,10 @@ import { Cross2Icon, QuestionMarkCircledIcon } from "@radix-ui/react-icons";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { DataTableViewOptions } from "./data-table-view-options";
-import { DataTableFacetedFilter } from "./data-table-faceted-filter";
+import { Sort } from "./sort";
+import { Filters } from "./filters";
 
-export function DataTableToolbar() {
+export function Toolbar() {
   return (
     <div className="flex items-center justify-between">
       <div className="flex flex-1 flex-wrap items-center gap-2">
@@ -16,7 +16,7 @@ export function DataTableToolbar() {
           placeholder="Filter tasks..."
           className="h-8 w-[150px] lg:w-[250px]"
         />
-        <DataTableFacetedFilter
+        <Filters
           title="Status"
           options={[
             {
@@ -31,7 +31,7 @@ export function DataTableToolbar() {
             },
           ]}
         />
-        <DataTableFacetedFilter
+        <Filters
           title="Priority"
           options={[
             {
@@ -51,7 +51,7 @@ export function DataTableToolbar() {
           <Cross2Icon className="ms-2 h-4 w-4" />
         </Button>
       </div>
-      <DataTableViewOptions />
+      <Sort />
     </div>
   );
 }
