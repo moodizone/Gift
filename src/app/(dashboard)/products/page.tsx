@@ -8,9 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import ProductCard from "./product-card";
-import { Toolbar } from "./toolbar";
-import { Pagination } from "./toolbar/pagination";
+import List from "./list";
 
 export async function generateMetadata() {
   const i18n = await initI18nInstance();
@@ -31,15 +29,7 @@ export default async function Page() {
           <CardDescription>{i18n.t("ProductsH")}</CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4 justify-center sm:justify-start grid-cols-[repeat(auto-fit,320px)]">
-          <div className="col-span-full">
-            <Toolbar />
-          </div>
-          {new Array(20).fill(1).map((_, index) => (
-            <ProductCard key={index} />
-          ))}
-          <div className="col-span-full">
-            <Pagination />
-          </div>
+          <List />
         </CardContent>
       </Card>
     </Layout>
