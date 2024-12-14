@@ -1,6 +1,5 @@
 import * as React from "react";
-
-import { initI18nInstance } from "@/locale/server-config";
+import { useTranslation } from "react-i18next";
 
 function noProduct() {
   const darkerZinc = `var(--zinc-900to-100)`;
@@ -118,14 +117,12 @@ function noProduct() {
 
 const NoProductComponent = React.memo(noProduct);
 
-async function NotFound() {
-  const i18n = await initI18nInstance();
+function NotFound() {
+  const { t } = useTranslation();
   return (
     <div className="col-span-full h-[240px] w-full flex flex-col gap-y-4 items-center justify-center mt-10">
       <NoProductComponent />
-      <p className="text-muted-foreground text-center">
-        {i18n.t("empty_product")}
-      </p>
+      <p className="text-muted-foreground text-center">{t("empty_product")}</p>
     </div>
   );
 }

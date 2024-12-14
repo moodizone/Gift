@@ -84,6 +84,7 @@
   "Update Password": "Update Password",
   "Your password has been updated successfully.": "Your password has been updated successfully. Please log in to continue",
   "Back": "Back",
-  "Products":"Products",
-  "ProductsH":"Dive into a world of endless possibilities with products you’ll adore."
+  "Products": "Products",
+  "ProductsH": "Dive into a world of endless possibilities with products you’ll adore.",
+  "empty_product": "Like a fridge at midnight, we’ve got nothing. Come back later?"
 }
