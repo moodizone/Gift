@@ -1,5 +1,7 @@
 import * as React from "react";
 
+import { initI18nInstance } from "@/locale/server-config";
+
 function noProduct() {
   const darkerZinc = `var(--zinc-900to-100)`;
   const lighterZinc = `var(--zinc-600-to-300)`;
@@ -116,11 +118,14 @@ function noProduct() {
 
 const NoProductComponent = React.memo(noProduct);
 
-function NotFound() {
+async function NotFound() {
+  const i18n = await initI18nInstance();
   return (
-    <div className="col-span-full h-[330px] w-full flex flex-col gap-y-4 items-center justify-center">
+    <div className="col-span-full h-[240px] w-full flex flex-col gap-y-4 items-center justify-center mt-10">
       <NoProductComponent />
-      <p className="">Not found</p>
+      <p className="text-muted-foreground text-center">
+        {i18n.t("empty_product")}
+      </p>
     </div>
   );
 }
