@@ -31,7 +31,7 @@ interface DataTableFacetedFilterProps<TData, TValue> {
   }[];
 }
 
-export function DataTableFacetedFilter<TData, TValue>({
+export function Filters<TData, TValue>({
   column,
   title,
   options,

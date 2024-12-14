@@ -12,7 +12,7 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 
-export function DataTableViewOptions() {
+export function Sort() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
