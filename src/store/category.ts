@@ -15,7 +15,7 @@ export const useCategorySlice = create<CategoryState>()((set, getState) => ({
   async getCategories() {
     const currentState = getState();
 
-    if (this.isFetched) return Promise.resolve(currentState.list);
+    if (currentState.isFetched) return Promise.resolve(currentState.list);
 
     const result = await getCategoryService();
     set(() => ({ list: result, isFetched: true }));
