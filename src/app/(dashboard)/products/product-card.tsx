@@ -1,21 +1,13 @@
-"use client";
 import * as React from "react";
 import Image from "next/image";
-import Cookies from "js-cookie";
+import { Star } from "lucide-react";
 
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Star } from "lucide-react";
-import { getTheme, ThemeEnum } from "@/lib/settings";
 
 function ProductCard() {
-  const theme = getTheme(Cookies.get("theme"));
-  // 400 a1a1aa (lighter)
-  // 700 3f3f46 (darker)
-  const filledCol = theme === ThemeEnum.dark ? "#a1a1aa" : "#3f3f46";
-  const unfilledCol = theme === ThemeEnum.dark ? "#3f3f46" : "#a1a1aa";
-
-  console.log(theme, filledCol, unfilledCol);
+  const filledCol = "var(--zinc-400-to-700)";
+  const unfilledCol = "var(--zinc-700-to-400)";
 
   return (
     <a href="#" target="_blank" rel="noreferrer">
