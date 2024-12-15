@@ -72,7 +72,8 @@ export function Sort<V extends React.Key>({
           return (
             <DropdownMenuCheckboxItem
               key={opt.value}
-              className="capitalize ps-2"
+              className="capitalize"
+              checked={isSelected}
               onSelect={() => {
                 let newValue: string | null = null;
 
@@ -96,12 +97,6 @@ export function Sort<V extends React.Key>({
                 router.push(newUrl);
               }}
             >
-              {opt.icon && (
-                <opt.icon
-                  weight={isSelected ? "fill" : "bold"}
-                  className="me-2 h-4 w-4 text-muted-foreground"
-                />
-              )}
               {opt.label}
             </DropdownMenuCheckboxItem>
           );
