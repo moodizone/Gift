@@ -15,15 +15,13 @@ import {
   ThumbsUp,
   Trophy,
 } from "@phosphor-icons/react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import qs from "query-string";
 
 import i18n from "@/locale/client-config";
-import { Input } from "@/components/ui/input";
 import { Sort } from "./sort";
 import { CheckboxFilter, OptionType } from "./checkbox-filter";
 import { GetCategoryResponse } from "@/services/type";
 import { RadioFilter } from "./radio-filter";
+import SearchInput from "./search-input";
 
 interface PropsType {
   categories: GetCategoryResponse[];
@@ -90,12 +88,6 @@ function categoryIconMapper(id: number) {
 
 export function Toolbar({ categories }: PropsType) {
   const { t } = useTranslation();
-  const search = useSearchParams();
-  const stringifySearch = search.toString();
-  const pathname = usePathname();
-  const router = useRouter();
-  const parsedSearchParams = qs.parse(stringifySearch);
-  const term = parsedSearchParams.term;
   const categoryOptions = categories.reduce<
     OptionType<GetCategoryResponse["id"]>[]
   >((prev, curr) => {
@@ -114,24 +106,7 @@ export function Toolbar({ categories }: PropsType) {
   return (
     <div className="flex flex-wrap items-center gap-2 justify-between">
       <div className="flex flex-1 flex-wrap items-center gap-2">
-        <Input
-          defaultValue={typeof term === "string" ? term : undefined}
-          onChange={(e) => {
-            const clonedParams = { ...parsedSearchParams };
-
-            delete clonedParams.term;
-            const newUrl = qs.stringifyUrl({
-              url: pathname,
-              query: {
-                ...clonedParams,
-                term: e.target.value ? e.target.value : undefined,
-              },
-            });
-            router.push(newUrl);
-          }}
-          placeholder={t("product.searchPlaceholder")}
-          className="h-8 w-[240px]"
-        />
+        <SearchInput />
         <CheckboxFilter<GetCategoryResponse["id"]>
           title={t("product.category")}
           options={categoryOptions}
