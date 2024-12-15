@@ -1,6 +1,8 @@
 import * as React from "react";
 import { CheckIcon, PlusCircledIcon } from "@radix-ui/react-icons";
-import { Column } from "@tanstack/react-table";
+import { useTranslation } from "react-i18next";
+import qs from "query-string";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
@@ -21,23 +23,53 @@ import {
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 
-interface DataTableFacetedFilterProps<TData, TValue> {
-  column?: Column<TData, TValue>;
-  title?: string;
-  options: {
-    label: string;
-    value: string;
-    icon?: React.ComponentType<{ className?: string }>;
-  }[];
+export interface OptionType<V> {
+  label: string;
+  value: V;
+  icon?: React.ComponentType<{ className?: string }>;
 }
 
-export function Filters<TData, TValue>({
-  column,
+interface PropTypes<V> {
+  title: string;
+  options: OptionType<V>[];
+  queryKey: string;
+}
+
+export function CheckboxFilter<V extends React.Key>({
   title,
   options,
-}: DataTableFacetedFilterProps<TData, TValue>) {
-  const facets = column?.getFacetedUniqueValues();
-  const selectedValues = new Set(column?.getFilterValue() as string[]);
+  queryKey,
+}: PropTypes<V>) {
+  // I have to use it over `window.location.search` since this
+  // hook make rerender if query parameter changes
+  const search = useSearchParams();
+  const stringifySearch = search.toString();
+  const pathname = usePathname();
+  const router = useRouter();
+  const { t } = useTranslation();
+  const parsedSearchParams = qs.parse(stringifySearch);
+  let selectedValues: string[] = [];
+
+  if (typeof parsedSearchParams[queryKey] === "string") {
+    selectedValues = [parsedSearchParams[queryKey]];
+  } else if (Array.isArray(parsedSearchParams[queryKey])) {
+    selectedValues = parsedSearchParams[queryKey].filter(
+      (c) => typeof c === "string"
+    );
+  }
+
+  function onClear() {
+    const clonedParams = { ...parsedSearchParams };
+    delete clonedParams[queryKey];
+    const newUrl = qs.stringifyUrl({
+      url: pathname,
+      query: {
+        ...clonedParams,
+      },
+    });
+
+    router.push(newUrl);
+  }
 
   return (
     <Popover>
@@ -45,26 +77,31 @@ export function Filters<TData, TValue>({
         <Button variant="outline" size="sm" className="h-8 border-dashed">
           <PlusCircledIcon className="me-2 h-4 w-4" />
           {title}
-          {selectedValues?.size > 0 && (
+          {selectedValues?.length > 0 && (
             <>
               <Separator orientation="vertical" className="mx-2 h-4" />
               <Badge
                 variant="secondary"
                 className="rounded-sm px-1 font-normal lg:hidden"
               >
-                {selectedValues.size}
+                {selectedValues.length}
               </Badge>
               <div className="hidden gap-x-1 lg:flex">
-                {selectedValues.size > 2 ? (
+                {selectedValues.length > 2 ? (
                   <Badge
                     variant="secondary"
                     className="rounded-sm px-1 font-normal"
                   >
-                    {selectedValues.size} selected
+                    {selectedValues.length} selected
                   </Badge>
                 ) : (
                   options
-                    .filter((option) => selectedValues.has(option.value))
+                    .filter((option) => {
+                      const foundedIndex = selectedValues.findIndex(
+                        (v) => v == option.value
+                      );
+                      return foundedIndex !== -1;
+                    })
                     .map((option) => (
                       <Badge
                         variant="secondary"
@@ -80,27 +117,42 @@ export function Filters<TData, TValue>({
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0" align="start">
+      <PopoverContent className="min-w-[200px] p-0" align="start">
         <Command>
-          <CommandInput placeholder={title} />
+          <CommandInput placeholder={t("Find your perfect match ...")} />
           <CommandList>
-            <CommandEmpty>No results found.</CommandEmpty>
+            <CommandEmpty>{t("No results found")}</CommandEmpty>
             <CommandGroup>
               {options.map((option) => {
-                const isSelected = selectedValues.has(option.value);
+                const foundedIndex = selectedValues.findIndex(
+                  (v) => v == option.value
+                );
+                const isSelected = foundedIndex !== -1;
                 return (
                   <CommandItem
                     key={option.value}
                     onSelect={() => {
+                      let newValues: string[] = [];
+
                       if (isSelected) {
-                        selectedValues.delete(option.value);
+                        newValues = selectedValues.filter(
+                          (v) => v != option.value
+                        );
                       } else {
-                        selectedValues.add(option.value);
+                        newValues = [...selectedValues, String(option.value)];
                       }
-                      const filterValues = Array.from(selectedValues);
-                      column?.setFilterValue(
-                        filterValues.length ? filterValues : undefined
-                      );
+
+                      const clonedParams = { ...parsedSearchParams };
+                      delete clonedParams[queryKey];
+                      const newUrl = qs.stringifyUrl({
+                        url: pathname,
+                        query: {
+                          [queryKey]: newValues,
+                          ...clonedParams,
+                        },
+                      });
+
+                      router.push(newUrl);
                     }}
                   >
                     <div
@@ -117,28 +169,23 @@ export function Filters<TData, TValue>({
                       <option.icon className="me-2 h-4 w-4 text-muted-foreground" />
                     )}
                     <span>{option.label}</span>
-                    {facets?.get(option.value) && (
-                      <span className="ms-auto flex h-4 w-4 items-center justify-center font-mono text-xs">
-                        {facets.get(option.value)}
-                      </span>
-                    )}
                   </CommandItem>
                 );
               })}
             </CommandGroup>
-            {selectedValues.size > 0 && (
+            {selectedValues.length > 0 ? (
               <>
                 <CommandSeparator />
                 <CommandGroup>
                   <CommandItem
-                    onSelect={() => column?.setFilterValue(undefined)}
                     className="justify-center text-center"
+                    onSelect={onClear}
                   >
-                    Clear filters
+                    {t("Clear Filters")}
                   </CommandItem>
                 </CommandGroup>
               </>
-            )}
+            ) : null}
           </CommandList>
         </Command>
       </PopoverContent>
