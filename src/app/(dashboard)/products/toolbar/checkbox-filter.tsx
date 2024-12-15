@@ -3,6 +3,7 @@ import { CheckIcon, PlusCircledIcon } from "@radix-ui/react-icons";
 import { useTranslation } from "react-i18next";
 import qs from "query-string";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Icon } from "@phosphor-icons/react";
 
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
@@ -26,7 +27,7 @@ import { Separator } from "@/components/ui/separator";
 export interface OptionType<V> {
   label: string;
   value: V;
-  icon?: React.ComponentType<{ className?: string; weight?: string }>;
+  icon?: Icon;
 }
 
 interface PropTypes<V> {
