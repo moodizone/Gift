@@ -28,7 +28,10 @@ export default async function Page() {
           <CardTitle>{i18n.t("Products")}</CardTitle>
           <CardDescription>{i18n.t("ProductsH")}</CardDescription>
         </CardHeader>
-        <CardContent className="grid gap-4 justify-center sm:justify-start grid-cols-[repeat(auto-fit,320px)]">
+        <CardContent
+          className="grid gap-4 justify-center sm:justify-start 
+        grid-cols-[repeat(auto-fit,_minmax(320px,1fr))] sm:grid-cols-[repeat(auto-fit,320px)]"
+        >
           <List />
         </CardContent>
       </Card>

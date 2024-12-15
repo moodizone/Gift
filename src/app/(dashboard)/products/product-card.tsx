@@ -11,7 +11,7 @@ function ProductCard() {
 
   return (
     <a href="#" target="_blank" rel="noreferrer">
-      <Card className="w-[320px]">
+      <Card className="w-full sm:w-[320px]">
         <CardHeader className="relative w-full h-[300px] bg-zinc-200 dark:bg-zinc-900 flex items-center justify-center">
           <Badge className="absolute end-4 top-4 shadow-sm" variant="secondary">
             Secondary
