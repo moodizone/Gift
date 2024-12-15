@@ -86,5 +86,40 @@
   "Back": "Back",
   "Products": "Products",
   "ProductsH": "Dive into a world of endless possibilities with products you’ll adore.",
-  "empty_product": "Like a fridge at midnight, we’ve got nothing. Come back later?"
+  "empty_product": "Like a fridge at midnight, we’ve got nothing. Come back later?",
+  "product": {
+    "category": "Category",
+    "rate": "Rating",
+    "No results found": "No results found.",
+    "Clear Filters": "Clear Filters",
+    "What are you looking for today?": "What are you looking for today?",
+    "Find your perfect match..": "Find your perfect match..",
+    "reset": "Reset",
+    "selectedFilter": "{{count}} selected",
+    "searchPlaceholder": "Find it fast...",
+    "view": "View",
+    "sortBy": "Sort by",
+    "sort": {
+      "1": "Wallet-Friendly Wonders",
+      "2": "Top-Dollar Delights",
+      "3": "In the Spotlight",
+      "4": "New Arrivals"
+    }
+  },
+  "category": {
+    "1": "Art and Crafts",
+    "2": "Automotive",
+    "3": "Baby",
+    "4": "Boys Fashion",
+    "5": "Computer",
+    "6": "Girls Fashion",
+    "7": "Health and Household",
+    "8": "Industrial and Scientific",
+    "9": "Pet Supplies"
+  },
+  "rating": {
+    "1": "Underwhelming",
+    "2": "Satisfactory",
+    "3": "Outstanding"
+  }
 }
