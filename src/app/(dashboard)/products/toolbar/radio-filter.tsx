@@ -11,7 +11,6 @@ import {
   Command,
   CommandEmpty,
   CommandGroup,
-  CommandInput,
   CommandItem,
   CommandList,
   CommandSeparator,
@@ -22,12 +21,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
-
-export interface OptionType<V> {
-  label: string;
-  value: V;
-  icon?: React.ComponentType<{ className?: string; weight?: string }>;
-}
+import { OptionType } from "./checkbox-filter";
 
 interface PropTypes<V> {
   title: string;
@@ -35,7 +29,7 @@ interface PropTypes<V> {
   queryKey: string;
 }
 
-export function CheckboxFilter<V extends React.Key>({
+export function RadioFilter<V extends React.Key>({
   title,
   options,
   queryKey,
@@ -48,14 +42,10 @@ export function CheckboxFilter<V extends React.Key>({
   const router = useRouter();
   const { t } = useTranslation();
   const parsedSearchParams = qs.parse(stringifySearch);
-  let selectedValues: string[] = [];
+  let selectedValue: string | null = null;
 
   if (typeof parsedSearchParams[queryKey] === "string") {
-    selectedValues = [parsedSearchParams[queryKey]];
-  } else if (Array.isArray(parsedSearchParams[queryKey])) {
-    selectedValues = parsedSearchParams[queryKey].filter(
-      (c) => typeof c === "string"
-    );
+    selectedValue = parsedSearchParams[queryKey];
   }
 
   function onClear() {
@@ -77,71 +67,50 @@ export function CheckboxFilter<V extends React.Key>({
         <Button variant="outline" size="sm" className="h-8 border-dashed">
           <PlusCircledIcon className="me-2 h-4 w-4" />
           {title}
-          {selectedValues?.length > 0 && (
+          {selectedValue ? (
             <>
               <Separator orientation="vertical" className="mx-2 h-4" />
               <Badge
                 variant="secondary"
                 className="rounded-sm px-1 font-normal lg:hidden"
               >
-                {selectedValues.length}
+                {selectedValue.length}
               </Badge>
               <div className="hidden gap-x-1 lg:flex">
-                {selectedValues.length > 2 ? (
-                  <Badge
-                    variant="secondary"
-                    className="rounded-sm px-1 font-normal"
-                  >
-                    {t("product.selectedFilter", {
-                      count: selectedValues.length,
-                    })}
-                  </Badge>
-                ) : (
-                  options
-                    .filter((option) => {
-                      const foundedIndex = selectedValues.findIndex(
-                        (v) => v == option.value
-                      );
-                      return foundedIndex !== -1;
-                    })
-                    .map((option) => (
-                      <Badge
-                        variant="secondary"
-                        key={option.value}
-                        className="rounded-sm px-1 font-normal"
-                      >
-                        {option.label}
-                      </Badge>
-                    ))
-                )}
+                {options
+                  .filter((option) => selectedValue == option.value)
+                  .map((option) => (
+                    <Badge
+                      variant="secondary"
+                      key={option.value}
+                      className="rounded-sm px-1 font-normal"
+                    >
+                      {option.label}
+                    </Badge>
+                  ))}
               </div>
             </>
-          )}
+          ) : null}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="min-w-[200px] p-0" align="start">
         <Command>
-          <CommandInput placeholder={t("Find your perfect match ...")} />
           <CommandList>
             <CommandEmpty>{t("No results found")}</CommandEmpty>
             <CommandGroup>
               {options.map((option) => {
-                const foundedIndex = selectedValues.findIndex(
-                  (v) => v == option.value
-                );
-                const isSelected = foundedIndex !== -1;
+                const isSelected = option.value == selectedValue;
                 return (
                   <CommandItem
                     key={option.value}
                     onSelect={() => {
-                      let newValues: string[] = [];
+                      let newValue: string | null = null;
 
                       if (isSelected) {
-                        newValues = selectedValues.filter(
-                          (v) => v != option.value
-                        );
+                        onClear();
+                        return;
                       } else {
-                        newValues = [...selectedValues, String(option.value)];
+                        newValue = String(option.value);
                       }
 
                       const clonedParams = { ...parsedSearchParams };
@@ -149,7 +118,7 @@ export function CheckboxFilter<V extends React.Key>({
                       const newUrl = qs.stringifyUrl({
                         url: pathname,
                         query: {
-                          [queryKey]: newValues,
+                          [queryKey]: newValue,
                           ...clonedParams,
                         },
                       });
@@ -178,7 +147,7 @@ export function CheckboxFilter<V extends React.Key>({
                 );
               })}
             </CommandGroup>
-            {selectedValues.length > 0 ? (
+            {selectedValue ? (
               <>
                 <CommandSeparator />
                 <CommandGroup>
