@@ -44,7 +44,10 @@ export function AccountForm({ initialValue, onSubmit }: PropsType) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(submitHandler)} className="space-y-8">
+      <form
+        onSubmit={form.handleSubmit(submitHandler)}
+        className="space-y-8 max-w-[600px]"
+      >
         <FormField
           control={form.control}
           name="email"
@@ -52,7 +55,16 @@ export function AccountForm({ initialValue, onSubmit }: PropsType) {
             <FormItem>
               <FormLabel>{t("Email")}</FormLabel>
               <FormControl>
-                <Input readOnly {...field} />
+                <Input
+                  autoCapitalize="none"
+                  autoComplete="email"
+                  autoCorrect="off"
+                  inputMode="email"
+                  className="digit"
+                  type="email"
+                  readOnly
+                  {...field}
+                />
               </FormControl>
               <FormDescription>{t("emailH")}</FormDescription>
               <FormMessage />
@@ -69,9 +81,14 @@ export function AccountForm({ initialValue, onSubmit }: PropsType) {
                 <div className="relative">
                   <Input
                     {...field}
+                    className="pe-8"
+                    autoCapitalize="none"
+                    autoComplete="off"
+                    autoCorrect="off"
+                    inputMode="text"
                     type={showPassword.old ? "text" : "password"}
                   />
-                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 cursor-pointer">
+                  <div className="absolute inset-y-0 end-0 pe-3 flex items-center text-gray-400 cursor-pointer">
                     {showPassword.old ? (
                       <EyeOff
                         className="h-4 w-4"
@@ -111,9 +128,14 @@ export function AccountForm({ initialValue, onSubmit }: PropsType) {
                 <div className="relative">
                   <Input
                     {...field}
+                    className="pe-8"
+                    autoCapitalize="none"
+                    autoComplete="off"
+                    autoCorrect="off"
+                    inputMode="text"
                     type={showPassword.new ? "text" : "password"}
                   />
-                  <div className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 cursor-pointer">
+                  <div className="absolute inset-y-0 end-0 pe-3 flex items-center text-gray-400 cursor-pointer">
                     {showPassword.new ? (
                       <EyeOff
                         className="h-4 w-4"

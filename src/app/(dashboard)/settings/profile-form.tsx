@@ -57,7 +57,10 @@ export function ProfileForm({ initialValue, onSubmit }: PropsType) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(submitHandler)} className="space-y-8">
+      <form
+        onSubmit={form.handleSubmit(submitHandler)}
+        className="space-y-8 max-w-[600px]"
+      >
         <FormField
           control={form.control}
           name="firstName"
@@ -65,7 +68,13 @@ export function ProfileForm({ initialValue, onSubmit }: PropsType) {
             <FormItem>
               <FormLabel>{t("firstName")}</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input
+                  autoCapitalize="none"
+                  autoComplete="off"
+                  autoCorrect="off"
+                  inputMode="text"
+                  {...field}
+                />
               </FormControl>
               <FormDescription>{t("firstNameH")}</FormDescription>
               <FormMessage />
@@ -79,7 +88,13 @@ export function ProfileForm({ initialValue, onSubmit }: PropsType) {
             <FormItem>
               <FormLabel>{t("lastName")}</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input
+                  autoCapitalize="none"
+                  autoComplete="off"
+                  autoCorrect="off"
+                  inputMode="text"
+                  {...field}
+                />
               </FormControl>
               <FormDescription>{t("lastNameH")}</FormDescription>
               <FormMessage />
@@ -169,7 +184,13 @@ export function ProfileForm({ initialValue, onSubmit }: PropsType) {
             <FormItem>
               <FormLabel>{t("tel")}</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input
+                  autoCapitalize="none"
+                  autoComplete="off"
+                  autoCorrect="off"
+                  inputMode="tel"
+                  {...field}
+                />
               </FormControl>
               <FormDescription>{t("telH")}</FormDescription>
               <FormMessage />
@@ -183,7 +204,15 @@ export function ProfileForm({ initialValue, onSubmit }: PropsType) {
             <FormItem>
               <FormLabel>{t("bio")}</FormLabel>
               <FormControl>
-                <Textarea className="resize-none" {...field} maxLength={1000} />
+                <Textarea
+                  autoCapitalize="none"
+                  autoComplete="off"
+                  autoCorrect="off"
+                  inputMode="text"
+                  className="resize-none"
+                  {...field}
+                  maxLength={1000}
+                />
               </FormControl>
               <FormDescription>{t("bioH")}</FormDescription>
               <FormMessage />
@@ -197,7 +226,15 @@ export function ProfileForm({ initialValue, onSubmit }: PropsType) {
             <FormItem>
               <FormLabel>{t("address")}</FormLabel>
               <FormControl>
-                <Textarea className="resize-none" {...field} maxLength={1000} />
+                <Textarea
+                  autoCapitalize="none"
+                  autoComplete="off"
+                  autoCorrect="off"
+                  inputMode="text"
+                  className="resize-none"
+                  {...field}
+                  maxLength={1000}
+                />
               </FormControl>
               <FormDescription>{t("addressH")}</FormDescription>
               <FormMessage />

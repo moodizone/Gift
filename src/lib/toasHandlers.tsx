@@ -4,6 +4,7 @@ import { Trans } from "react-i18next";
 import { toast } from "@/hooks/use-toast";
 import { ErrorType } from "@/services/type";
 import { APIError } from "@/lib/fetch";
+import { DirectionEnum } from "./settings";
 
 export async function toastError(
   ins: typeof toast,
@@ -37,7 +38,7 @@ export async function toastError(
   const errors: ErrorType = await error.response.json();
   const description = (
     <pre className="mt-2 rounded-md p-1 bg-red-950">
-      <code dir="ltr" className="text-white whitespace-pre-wrap">
+      <code dir={DirectionEnum.ltr} className="text-white whitespace-pre-wrap">
         {JSON.stringify(errors.message, null, 1)}
       </code>
     </pre>

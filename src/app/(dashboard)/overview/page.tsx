@@ -11,6 +11,7 @@ import {
 import { CalendarDateRangePicker } from "./date-range-picker";
 import { Overview } from "./overview";
 import { RecentSales } from "./recent-sales";
+import { DirectionEnum } from "@/lib/settings";
 
 export const metadata: Metadata = {
   title: "Overview",
@@ -133,7 +134,7 @@ export default function DashboardPage() {
             <CardHeader>
               <CardTitle>Overview</CardTitle>
             </CardHeader>
-            <CardContent className="ps-2" dir="ltr">
+            <CardContent className="ps-2" dir={DirectionEnum.ltr}>
               <Overview />
             </CardContent>
           </Card>

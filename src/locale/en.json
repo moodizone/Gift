@@ -67,7 +67,7 @@
   "female": "Female",
   "others": "Others",
   "Something went wrong, That's all we know!": "Something went wrong, That's all we know!",
-  "reload": "RELOAD",
+  "reload": "Refresh",
   "Error!": "Error!",
   "Token Expired! Time's Up": "Token Expired! Time's Up! ⏳",
   "Just log in again to keep things rolling. Your session was awesome while it lasted!": "Just log in again to keep things rolling. Your session was awesome while it lasted!",
@@ -76,12 +76,59 @@
   "Success": "Success",
   "Changes saved. You're all set": "Changes saved. You're all set! 📂",
   "emailH": "This is your registered email. It’s fixed in stone—your unchanging link to us.",
-  "Account Settings": "Account Settings",
-  "Account SettingsH": "Your gateway to all things secure and serene! ",
+  "AccountH": "Your gateway to all things secure and serene! ",
   "oldPassword": "Old Password",
   "oldPasswordH": "Just making sure it’s really you! Enter your current password to proceed with changes.",
   "newPassword": "New Password",
   "newPasswordH": "Choose a strong password to keep your account secure.",
   "Update Password": "Update Password",
-  "Your password has been updated successfully.": "Your password has been updated successfully. Please log in to continue"
+  "Your password has been updated successfully.": "Your password has been updated successfully. Please log in to continue",
+  "Back": "Back",
+  "Products": "Products",
+  "ProductsH": "Dive into a world of endless possibilities with products you’ll adore.",
+  "empty_product": "Like a fridge at midnight, we’ve got nothing. Come back later?",
+  "product": {
+    "category": "Category",
+    "rate": "Rating",
+    "No results found": "No results found.",
+    "Clear Filters": "Clear Filters",
+    "What are you looking for today?": "What are you looking for today?",
+    "Find your perfect match..": "Find your perfect match..",
+    "reset": "Reset",
+    "selectedFilter": "{{count}} selected",
+    "searchPlaceholder": "Find it fast...",
+    "view": "View",
+    "sortBy": "Sort by",
+    "sort": {
+      "1": "Wallet-Friendly Wonders",
+      "2": "Top-Dollar Delights",
+      "3": "In the Spotlight",
+      "4": "New Arrivals"
+    }
+  },
+  "category": {
+    "1": "Art and Crafts",
+    "2": "Automotive",
+    "3": "Baby",
+    "4": "Boys Fashion",
+    "5": "Computer",
+    "6": "Girls Fashion",
+    "7": "Health and Household",
+    "8": "Industrial and Scientific",
+    "9": "Pet Supplies"
+  },
+  "rating": {
+    "1": "Underwhelming",
+    "2": "Satisfactory",
+    "3": "Outstanding"
+  },
+  "pagination": {
+    "title": "Items per page",
+    "count": "{{a}} record(s) found",
+    "pageOf": "Page {{a}} of {{b}}",
+    "first": "Go to first page",
+    "previous": "Go to previous page",
+    "next": "Go to next page",
+    "last": "Go to last page"
+  }
 }

@@ -1,29 +1,37 @@
-import { Separator } from "@/components/ui/separator";
 import AccountProvider from "./AccountProvider";
 import { initI18nInstance } from "@/locale/server-config";
 import { basedMeta } from "@/lib/metadata";
+import Layout from "../../AuthProvider/layout";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export async function generateMetadata() {
   const i18n = await initI18nInstance();
   return basedMeta({
-    title: i18n.t("Account Settings"),
-    description: i18n.t("Account SettingsH"),
+    title: i18n.t("Account"),
+    description: i18n.t("AccountH"),
     privateMode: true,
   });
 }
 
-export default async function SettingsAccountPage() {
+export default async function AccountPage() {
   const i18n = await initI18nInstance();
   return (
-    <div className="space-y-6">
-      <div>
-        <h3 className="text-lg font-medium">{i18n.t("Account Settings")}</h3>
-        <p className="text-sm text-muted-foreground">
-          {i18n.t("Account SettingsH")}
-        </p>
-      </div>
-      <Separator />
-      <AccountProvider />
-    </div>
+    <Layout>
+      <Card className="border-0 shadow-none">
+        <CardHeader>
+          <CardTitle>{i18n.t("Account")}</CardTitle>
+          <CardDescription>{i18n.t("AccountH")}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <AccountProvider />
+        </CardContent>
+      </Card>
+    </Layout>
   );
 }

@@ -1,5 +1,9 @@
-import { initI18nInstance } from "@/locale/server-config";
 import Link from "next/link";
+
+import { initI18nInstance } from "@/locale/server-config";
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
+import BackButton from "@/components/BackButton";
 
 export default async function Component() {
   const i18n = await initI18nInstance();
@@ -16,13 +20,23 @@ export default async function Component() {
             )}
           </p>
         </div>
-        <Link
-          href="/"
-          className="inline-flex h-10 items-center rounded-md bg-gray-900 px-8 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
-          prefetch={false}
-        >
-          {"Return to website"}
-        </Link>
+        <div className="flex flex-col gap-y-2">
+          <div>
+            <Link
+              href="/"
+              className={cn(
+                buttonVariants({ variant: "default" }),
+                "w-[180px]"
+              )}
+              prefetch={false}
+            >
+              {"Return to Home"}
+            </Link>
+          </div>
+          <div>
+            <BackButton />
+          </div>
+        </div>
       </div>
     </div>
   );
