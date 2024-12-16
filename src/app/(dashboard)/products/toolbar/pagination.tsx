@@ -53,7 +53,7 @@ export function Pagination({ count, pageNumber, perPage }: PropsType) {
   return (
     <div className="flex flex-col md:flex-row items-center justify-between gap-y-2 px-2">
       <div className="flex-1 text-sm text-muted-foreground">
-        {t("pagination.outOf", { a: 100, b: count })}
+        {t("pagination.count", { a: count })}
       </div>
       <div className="flex flex-col md:flex-row items-center gap-y-2 gap-x-6 lg:gap-x-8">
         <div className="flex items-center gap-x-2">
@@ -91,7 +91,7 @@ export function Pagination({ count, pageNumber, perPage }: PropsType) {
             disabled={pageNumber === 1}
           >
             <span className="sr-only">{t("pagination.first")}</span>
-            <DoubleArrowLeftIcon className="h-4 w-4" />
+            <DoubleArrowLeftIcon className="h-4 w-4 rtl:scale-x-[-1]" />
           </Button>
           <Button
             variant="outline"
@@ -104,7 +104,7 @@ export function Pagination({ count, pageNumber, perPage }: PropsType) {
             }}
           >
             <span className="sr-only">{t("pagination.previous")}</span>
-            <ChevronLeftIcon className="h-4 w-4" />
+            <ChevronLeftIcon className="h-4 w-4 rtl:scale-x-[-1]" />
           </Button>
           <Button
             variant="outline"
@@ -117,7 +117,7 @@ export function Pagination({ count, pageNumber, perPage }: PropsType) {
             }}
           >
             <span className="sr-only">{t("pagination.next")}</span>
-            <ChevronRightIcon className="h-4 w-4" />
+            <ChevronRightIcon className="h-4 w-4 rtl:scale-x-[-1]" />
           </Button>
           <Button
             variant="outline"
@@ -128,7 +128,7 @@ export function Pagination({ count, pageNumber, perPage }: PropsType) {
             }}
           >
             <span className="sr-only">{t("pagination.last")}</span>
-            <DoubleArrowRightIcon className="h-4 w-4" />
+            <DoubleArrowRightIcon className="h-4 w-4 rtl:scale-x-[-1]" />
           </Button>
         </div>
       </div>
