@@ -53,11 +53,11 @@ export function Pagination({ count, pageNumber, perPage }: PropsType) {
   return (
     <div className="flex flex-col md:flex-row items-center justify-between gap-y-2 px-2">
       <div className="flex-1 text-sm text-muted-foreground">
-        {100} out of {count}
+        {t("pagination.outOf", { a: 100, b: count })}
       </div>
       <div className="flex flex-col md:flex-row items-center gap-y-2 gap-x-6 lg:gap-x-8">
         <div className="flex items-center gap-x-2">
-          <p className="text-sm font-medium">Items per page</p>
+          <p className="text-sm font-medium">{t("pagination.title")}</p>
           <Select
             defaultValue={`${perPage}`}
             onValueChange={(v) => {
@@ -79,7 +79,7 @@ export function Pagination({ count, pageNumber, perPage }: PropsType) {
           </Select>
         </div>
         <div className="flex items-center justify-center text-sm font-medium">
-          Page {pageNumber} of {lastPage}
+          {t("pagination.pageOf", { a: pageNumber, b: lastPage })}
         </div>
         <div className="flex items-center gap-x-2">
           <Button
@@ -90,7 +90,7 @@ export function Pagination({ count, pageNumber, perPage }: PropsType) {
             }}
             disabled={pageNumber === 1}
           >
-            <span className="sr-only">Go to first page</span>
+            <span className="sr-only">{t("pagination.first")}</span>
             <DoubleArrowLeftIcon className="h-4 w-4" />
           </Button>
           <Button
@@ -103,7 +103,7 @@ export function Pagination({ count, pageNumber, perPage }: PropsType) {
               }
             }}
           >
-            <span className="sr-only">Go to previous page</span>
+            <span className="sr-only">{t("pagination.previous")}</span>
             <ChevronLeftIcon className="h-4 w-4" />
           </Button>
           <Button
@@ -116,7 +116,7 @@ export function Pagination({ count, pageNumber, perPage }: PropsType) {
               }
             }}
           >
-            <span className="sr-only">Go to next page</span>
+            <span className="sr-only">{t("pagination.next")}</span>
             <ChevronRightIcon className="h-4 w-4" />
           </Button>
           <Button
@@ -127,7 +127,7 @@ export function Pagination({ count, pageNumber, perPage }: PropsType) {
               updateURL("page", lastPage);
             }}
           >
-            <span className="sr-only">Go to last page</span>
+            <span className="sr-only">{t("pagination.last")}</span>
             <DoubleArrowRightIcon className="h-4 w-4" />
           </Button>
         </div>

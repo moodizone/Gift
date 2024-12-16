@@ -121,5 +121,14 @@
     "1": "Underwhelming",
     "2": "Satisfactory",
     "3": "Outstanding"
+  },
+  "pagination": {
+    "title": "Items per page",
+    "outOf": "{{a}} out of {{b}}",
+    "pageOf": "Page {{a}} of {{b}}",
+    "first": "Go to first page",
+    "previous": "Go to previous page",
+    "next": "Go to next page",
+    "last": "Go to last page"
   }
 }
