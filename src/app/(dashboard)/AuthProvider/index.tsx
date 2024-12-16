@@ -6,6 +6,7 @@ import Unauthorized from "../../Unauthorized";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import Store from "./Store";
 import { AppSidebar } from "./app-sidebar";
+import { APIError } from "@/lib/fetch";
 
 async function getMe() {
   const response = await serverFetch<UserMeResponse>("/user/me");
@@ -24,9 +25,11 @@ async function AuthProvider({ children }: React.PropsWithChildren) {
         <SidebarInset>{children}</SidebarInset>
       </SidebarProvider>
     );
-  } catch {
-    // redirect to login page
-    return <Unauthorized />;
+  } catch (e) {
+    if (e instanceof APIError && e.response.status === 401) {
+      return <Unauthorized />;
+    }
+    throw e;
   }
 }
 
