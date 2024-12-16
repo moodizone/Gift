@@ -19,7 +19,11 @@ import {
 import i18n from "@/locale/client-config";
 import { Sort } from "./sort";
 import { CheckboxFilter, OptionType } from "./checkbox-filter";
-import { GetCategoryResponse } from "@/services/type";
+import {
+  GetCategoryResponse,
+  ProductRatingEnum,
+  ProductSortEnum,
+} from "@/services/type";
 import { RadioFilter } from "./radio-filter";
 import SearchInput from "./search-input";
 
@@ -28,29 +32,40 @@ interface PropsType {
 }
 
 const sortOptions: OptionType<string>[] = [
-  { value: "2", label: i18n.t("product.sort.2") }, // expensive
-  { value: "1", label: i18n.t("product.sort.1") }, // cheap
-  { value: "3", label: i18n.t("product.sort.3") }, // commented
-  { value: "4", label: i18n.t("product.sort.4") }, // new
+  {
+    value: ProductSortEnum.cheap,
+    label: i18n.t(`product.sort.${ProductSortEnum.cheap}`),
+  },
+  {
+    value: ProductSortEnum.expensive,
+    label: i18n.t(`product.sort.${ProductSortEnum.expensive}`),
+  },
+  {
+    value: ProductSortEnum.commented,
+    label: i18n.t(`product.sort.${ProductSortEnum.commented}`),
+  },
+  {
+    value: ProductSortEnum.new,
+    label: i18n.t(`product.sort.${ProductSortEnum.new}`),
+  },
 ];
 const rateOptions: OptionType<string>[] = [
   {
-    label: i18n.t("rating.1"),
-    value: "1", //[0:2]
+    label: i18n.t(`rating.${ProductRatingEnum.low}`),
+    value: ProductRatingEnum.low,
     icon: Ghost,
   },
   {
-    label: i18n.t("rating.2"),
-    value: "2", // (2:4)
+    label: i18n.t(`rating.${ProductRatingEnum.medium}`),
+    value: ProductRatingEnum.medium,
     icon: ThumbsUp,
   },
   {
-    label: i18n.t("rating.3"),
-    value: "3", // [4:5]
+    label: i18n.t(`rating.${ProductRatingEnum.high}`),
+    value: ProductRatingEnum.high,
     icon: Trophy,
   },
 ];
-
 function categoryIconMapper(id: number) {
   switch (id) {
     // art
