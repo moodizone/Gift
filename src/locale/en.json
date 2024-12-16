@@ -124,7 +124,7 @@
   },
   "pagination": {
     "title": "Items per page",
-    "outOf": "{{a}} out of {{b}}",
+    "count": "{{a}} record(s) found",
     "pageOf": "Page {{a}} of {{b}}",
     "first": "Go to first page",
     "previous": "Go to previous page",
