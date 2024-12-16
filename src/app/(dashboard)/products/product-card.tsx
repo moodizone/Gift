@@ -19,6 +19,11 @@ function ProductCard({
 }: ProductType) {
   const { t } = useTranslation();
   const filledCol = "var(--zinc-400-to-700)";
+  const formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 2, // Ensures two decimal places
+  });
 
   return (
     <a href={sourceLink ? sourceLink : "#"} target="_blank" rel="noreferrer">
@@ -73,7 +78,11 @@ function ProductCard({
                   </span>
                 ) : null}
               </div>
-              <h2 className="text-md font-semibold self-start">${price}</h2>
+              {price ? (
+                <h2 className="text-md font-semibold self-start">
+                  {formatter.format(price)}
+                </h2>
+              ) : null}
             </div>
             <h2
               className="text-md font-normal line-clamp-2"
