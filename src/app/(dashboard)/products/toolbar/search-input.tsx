@@ -12,25 +12,33 @@ function SearchInput() {
   const pathname = usePathname();
   const router = useRouter();
   const parsedSearchParams = qs.parse(search);
+  const oldTerm = React.useRef("");
   const [term, setTerm] = React.useState<string>(() => {
-    return typeof parsedSearchParams.term === "string"
-      ? parsedSearchParams.term
-      : "";
+    const initialTerm =
+      typeof parsedSearchParams.term === "string"
+        ? parsedSearchParams.term
+        : "";
+    oldTerm.current = initialTerm;
+    return initialTerm;
   });
 
   useDebounce(updateURL, 2000, [term]);
 
   function updateURL() {
-    const clonedParams = { ...parsedSearchParams };
-    delete clonedParams.term;
-    const newUrl = qs.stringifyUrl({
-      url: pathname,
-      query: {
-        ...clonedParams,
-        term: term ? term : undefined,
-      },
-    });
-    router.push(newUrl);
+    // prevent redundant request
+    if (oldTerm.current !== term) {
+      oldTerm.current = term;
+      const clonedParams = { ...parsedSearchParams };
+      delete clonedParams.term;
+      const newUrl = qs.stringifyUrl({
+        url: pathname,
+        query: {
+          ...clonedParams,
+          term: term ? term : undefined,
+        },
+      });
+      router.push(newUrl);
+    }
   }
 
   return (

@@ -74,7 +74,7 @@ function ProductCard({
                 ) : null}
                 {rateCount ? (
                   <span className="text-xs text-muted-foreground mt-1">
-                    {`(${rateCount})`}
+                    {`(${rateCount.toLocaleString("en-US")})`}
                   </span>
                 ) : null}
               </div>
