@@ -4,6 +4,8 @@ import {
   DoubleArrowLeftIcon,
   DoubleArrowRightIcon,
 } from "@radix-ui/react-icons";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
+import qs from "query-string";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -13,53 +15,117 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { LimitEnum } from "@/services/type";
+import { useTranslation } from "react-i18next";
 
-export function Pagination() {
+interface PropsType {
+  count: number;
+  perPage: LimitEnum;
+  pageNumber: number;
+}
+
+export function Pagination({ count, pageNumber, perPage }: PropsType) {
+  // TODO:translation
+  // discount
+  // stock
+  // no price products
+  // broken image products (fallback image)
+  const { t } = useTranslation();
+  const lastPage = Math.ceil(count / perPage);
+  const search = useSearchParams().toString();
+  const pathname = usePathname();
+  const router = useRouter();
+  const parsedSearchParams = qs.parse(search);
+
+  function updateURL(key: string, value: LimitEnum | number) {
+    const clonedParams = { ...parsedSearchParams };
+    delete clonedParams[key];
+    const newUrl = qs.stringifyUrl({
+      url: pathname,
+      query: {
+        ...clonedParams,
+        [key]: value,
+      },
+    });
+    router.push(newUrl);
+  }
+
   return (
     <div className="flex flex-col md:flex-row items-center justify-between gap-y-2 px-2">
       <div className="flex-1 text-sm text-muted-foreground">
-        {100} of {200} row(s) selected.
+        {100} out of {count}
       </div>
       <div className="flex flex-col md:flex-row items-center gap-y-2 gap-x-6 lg:gap-x-8">
         <div className="flex items-center gap-x-2">
-          <p className="text-sm font-medium">Rows per page</p>
-          <Select>
+          <p className="text-sm font-medium">Items per page</p>
+          <Select
+            defaultValue={`${perPage}`}
+            onValueChange={(v) => {
+              updateURL("limit", +v);
+            }}
+          >
             <SelectTrigger className="h-8 w-[70px]">
-              <SelectValue placeholder={55} />
+              <SelectValue />
             </SelectTrigger>
             <SelectContent side="top">
-              {[10, 20, 30, 40, 50].map((pageSize) => (
-                <SelectItem key={pageSize} value={`${pageSize}`}>
-                  {pageSize}
-                </SelectItem>
-              ))}
+              {[LimitEnum.few, LimitEnum.regular, LimitEnum.many].map(
+                (pageSize) => (
+                  <SelectItem key={pageSize} value={`${pageSize}`}>
+                    {pageSize}
+                  </SelectItem>
+                )
+              )}
             </SelectContent>
           </Select>
         </div>
-        <div className="flex w-[100px] items-center justify-center text-sm font-medium">
-          Page {48 + 1} of {18}
+        <div className="flex items-center justify-center text-sm font-medium">
+          Page {pageNumber} of {lastPage}
         </div>
         <div className="flex items-center gap-x-2">
           <Button
             variant="outline"
             className="hidden h-8 w-8 p-0 lg:flex"
-            disabled={true}
+            onClick={() => {
+              updateURL("page", 1);
+            }}
+            disabled={pageNumber === 1}
           >
             <span className="sr-only">Go to first page</span>
             <DoubleArrowLeftIcon className="h-4 w-4" />
           </Button>
-          <Button variant="outline" className="h-8 w-8 p-0" disabled={false}>
+          <Button
+            variant="outline"
+            className="h-8 w-8 p-0"
+            disabled={pageNumber === 1}
+            onClick={() => {
+              if (pageNumber > 1) {
+                updateURL("page", pageNumber - 1);
+              }
+            }}
+          >
             <span className="sr-only">Go to previous page</span>
             <ChevronLeftIcon className="h-4 w-4" />
           </Button>
-          <Button variant="outline" className="h-8 w-8 p-0" disabled={true}>
+          <Button
+            variant="outline"
+            className="h-8 w-8 p-0"
+            disabled={pageNumber === lastPage}
+            onClick={() => {
+              if (pageNumber < lastPage) {
+                updateURL("page", pageNumber + 1);
+              }
+            }}
+          >
             <span className="sr-only">Go to next page</span>
             <ChevronRightIcon className="h-4 w-4" />
           </Button>
           <Button
             variant="outline"
             className="hidden h-8 w-8 p-0 lg:flex"
-            disabled={false}
+            disabled={pageNumber === lastPage}
+            onClick={() => {
+              updateURL("page", lastPage);
+            }}
           >
             <span className="sr-only">Go to last page</span>
             <DoubleArrowRightIcon className="h-4 w-4" />

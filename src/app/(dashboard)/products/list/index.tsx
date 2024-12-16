@@ -21,11 +21,11 @@ function List() {
   const { toast } = useToast();
   const search = useSearchParams().toString();
   const { getCategories } = useCategorySlice();
-  const { loading: productLoading, value: productList = [] } =
+  const { loading: productLoading, value: productResult } =
     useAsync(async () => {
       try {
         const result = await getProducts(search);
-        return result.list;
+        return result;
       } catch (error) {
         if (error instanceof APIError) {
           toastError(toast, error);
@@ -48,10 +48,10 @@ function List() {
   // Subcomponents
   //================================
   const products =
-    productList.length === 0 ? (
+    productResult?.list.length === 0 ? (
       <NotFound />
     ) : (
-      productList.map((details, index) => (
+      productResult?.list.map((details, index) => (
         <ProductCard {...details} key={index} />
       ))
     );
@@ -68,9 +68,13 @@ function List() {
         <Toolbar categories={categories} />
       </div>
       {products}
-      {productList.length > 0 ? (
+      {productResult?.list && productResult.list.length > 0 ? (
         <div className="col-span-full">
-          <Pagination />
+          <Pagination
+            count={productResult.count}
+            perPage={productResult.perPage}
+            pageNumber={productResult.pageNumber}
+          />
         </div>
       ) : null}
     </React.Fragment>
